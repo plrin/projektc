@@ -1,4 +1,4 @@
-# Projekt C - Paper Space Troupers Fromation Gang Train
+﻿# Projekt C - Paper Space Troupers Fromation Gang Train
 
 
 ## Game Engines
@@ -40,3 +40,5 @@ hintergrund mit hand gezeichnet, wiederholt sich, figuren müssen sich
 abheben
 
 CHANGE 20:31
+
+Change 20:34
