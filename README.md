@@ -38,13 +38,3 @@ rocket (lenkt bisschen zum spieler/sinuswelle fliegen/explodieren aoe)
 Bleistift kritzel stil, einfach gezeichnet, wenig computerbildbearbeitung
 hintergrund mit hand gezeichnet, wiederholt sich, figuren müssen sich
 abheben
-
-CHANGE 20:31
-<<<<<<< HEAD
-
-Change 20:34
-=======
-COMMITT ONLY 20:34
-
-Change Sven 20:53
->>>>>>> fb5db8cadb3a4055ce0fe2e2f344832caf355109
