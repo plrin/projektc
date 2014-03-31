@@ -5,11 +5,11 @@
 
 
 ### Construct 2D 	
-[link]https://www.scirra.com/
+https://www.scirra.com/
 * 2D Engine, easy to use, wenig coden, gute GUI
 
 ### Kiwi.js		
-[link]http://www.kiwijs.org/
+http://www.kiwijs.org/
 * Library? 
 
 ##Leap Frameworks
@@ -23,22 +23,20 @@
 * Einbindung von Leap
 
 ##Spielideen
-> viele raumschiffe, verschiedene formationen mit hand steuerbar, von unten
-	oben fliegen, mit schießen, wenig gegenfeuer damit man durch ändern der
-	formation ausweichen kann
-	linke hand formation schalten, rechte hand bewegung
+viele raumschiffe, verschiedene formationen mit hand steuerbar, von unten
+oben fliegen, mit schießen, wenig gegenfeuer damit man durch ändern der
+formation ausweichen kann
+linke hand formation schalten, rechte hand bewegung
 
-	verschiedenen projektile: lasergun (schhießt dicken laserstrahl für eine
-	bestimmte zeit)
-	standard schuss (einfaches kleines projektil)
-	rocket (lenkt bisschen zum spieler/sinuswelle fliegen/explodieren aoe)
+verschiedenen projektile: lasergun (schhießt dicken laserstrahl für eine
+bestimmte zeit)
+standard schuss (einfaches kleines projektil)
+rocket (lenkt bisschen zum spieler/sinuswelle fliegen/explodieren aoe)
 
+## Grafiken
 
-
-Grafiken
-
-	Bleistift kritzel stil, einfach gezeichnet, wenig computerbildbearbeitung
-	hintergrund mit hand gezeichnet, wiederholt sich, figuren müssen sich
-	abheben
+Bleistift kritzel stil, einfach gezeichnet, wenig computerbildbearbeitung
+hintergrund mit hand gezeichnet, wiederholt sich, figuren müssen sich
+abheben
 
 
