@@ -39,4 +39,4 @@ Bleistift kritzel stil, einfach gezeichnet, wenig computerbildbearbeitung
 hintergrund mit hand gezeichnet, wiederholt sich, figuren müssen sich
 abheben
 
-
+CHANGE 20:31
