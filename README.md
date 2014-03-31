@@ -4,24 +4,26 @@
 ## Game Engines
 
 
-### Construct 2D 	https://www.scirra.com/
-	- 2D Engine, easy to use, wenig coden, gute GUI
+### Construct 2D 	
+[link]https://www.scirra.com/
+* 2D Engine, easy to use, wenig coden, gute GUI
 
-### Kiwi.js		http://www.kiwijs.org/
-	- Library?, 
+### Kiwi.js		
+[link]http://www.kiwijs.org/
+* Library? 
 
-Leap Frameworks
-	Kiwi.js Plugin
-	eigenes von Leap
+##Leap Frameworks
+* Kiwi.js Plugin
+* eigenes von Leap
 
-Arbeitsschritte
-Spielidee
-Design
-Umsetzung mit Engine
-Einbindung von Leap
+##Arbeitsschritte
+* Spielidee
+* Design
+* Umsetzung mit Engine
+* Einbindung von Leap
 
-Spielideen
-	viele raumschiffe, verschiedene formationen mit hand steuerbar, von unten
+##Spielideen
+> viele raumschiffe, verschiedene formationen mit hand steuerbar, von unten
 	oben fliegen, mit schießen, wenig gegenfeuer damit man durch ändern der
 	formation ausweichen kann
 	linke hand formation schalten, rechte hand bewegung
