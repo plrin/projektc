@@ -33,6 +33,9 @@ bestimmte zeit)
 standard schuss (einfaches kleines projektil)
 rocket (lenkt bisschen zum spieler/sinuswelle fliegen/explodieren aoe)
 
+man steuert mehrere Raumschiffe, die man nach der Zeit aufsammelt und steuert
+jeden separat
+
 ## Grafiken
 
 Bleistift kritzel stil, einfach gezeichnet, wenig computerbildbearbeitung

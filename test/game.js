@@ -48,7 +48,8 @@ function Ball(){
 		this.y += this.vy;
 		
 		if(this.x >= playerPaddle.x - playerPaddle.w/2 - this.radius){
-			if(this.y >= playerPaddle.y - playerPaddle.h/2 && this.y <= playerPaddle.y + playerPaddle.h/2){
+			if(this.y >= playerPaddle.y - playerPaddle.h/2 && this.y <= 
+				playerPaddle.y + playerPaddle.h/2){
 				this.vy = (playerPaddle.y-this.y)*-0.4;
 				this.x = playerPaddle.x - playerPaddle.w/2 - this.radius;
 				this.vx*=-1;
@@ -152,3 +153,5 @@ function Run(){
 }
 
 setInterval(Run,20); //!!IMPORTANT!! tells the browser to call Run() every 20ms
+
+// http://www.gamedev.net/page/resources/_/technical/game-programming/how-to-get-started-with-html5-r3352
