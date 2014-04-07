@@ -44,13 +44,11 @@ abheben
 
 ## Referenzen
 
-<<<<<<< HEAD
 Tyrian 2000
 Ikaruga http://youtu.be/EGNSdcy-apU
 Pop n Twinbee http://youtu.be/sjIZHOi85wc
-=======
+
 HTML5
 * X-Type http://x-type.tresensa.com/?dst=A0058
 * Space Encounter https://www.space-encounter.net/
 * http://radiusraid.clay.io/ im freien raum bewegn
->>>>>>> FETCH_HEAD
