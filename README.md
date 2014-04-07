@@ -41,3 +41,9 @@ jeden separat
 Bleistift kritzel stil, einfach gezeichnet, wenig computerbildbearbeitung
 hintergrund mit hand gezeichnet, wiederholt sich, figuren müssen sich
 abheben
+
+## Referenzen
+
+HTML5
+* X-Type http://x-type.tresensa.com/?dst=A0058
+* Space Encounter https://www.space-encounter.net/
