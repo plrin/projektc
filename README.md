@@ -41,3 +41,9 @@ jeden separat
 Bleistift kritzel stil, einfach gezeichnet, wenig computerbildbearbeitung
 hintergrund mit hand gezeichnet, wiederholt sich, figuren müssen sich
 abheben
+
+## Referenzen
+
+Tyrian 2000
+Ikaruga http://youtu.be/EGNSdcy-apU
+Pop n Twinbee http://youtu.be/sjIZHOi85wc
