@@ -20,9 +20,13 @@ myState.preload = function(){
 myState.create = function(){
  
     Kiwi.State.prototype.create.call(this);
+
+    //game stage size and bg color
+    myGame.stage.resize(700,500);
+    myGame.stage.color = '273788';
  
     this.background = new Kiwi.GameObjects.StaticImage(this, this.textures['background'], 0, 0);
-    this.character = new Kiwi.GameObjects.Sprite(this, this.textures['characterSprite'], 350, 330);
+    this.character = new Kiwi.GameObjects.Sprite(this, this.textures['characterSprite'], 250, 150);
     
     // key settings
     this.leftKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.LEFT);
