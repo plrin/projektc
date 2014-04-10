@@ -12,9 +12,9 @@ var myStat = new Kiwi.State('myState');
 // load resources, give resource a reference
 myState.preload = function(){
 	Kiwi.State.prototype.preload.call(this);
-	this.addSpriteSheet('characterSprite', '../images/spaceship.png', 143, 86);
+	this.addSpriteSheet('characterSprite', 'spaceship.png', 143, 86);
 	// 143, 86 size of one image in spritesheet
-	this.addImage('background', '../images/spaceground.png');
+	this.addImage('background', 'spaceground.png');
 };
 
 myState.create = function(){
