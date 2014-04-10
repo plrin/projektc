@@ -1,11 +1,20 @@
-var myGame = new Kiwi.Game();
+/*
+    9.4.14 created by Tan
+    This is a prototype of our game using Kiwi.js engine
 
+*/
+
+// create new game object
+var myGame = new Kiwi.Game();
+// create new state, contain logic for animation, controlling update
 var myState = new Kiwi.State('myState');
+
+// load resources, give resource a reference
 
 myState.preload = function(){
     Kiwi.State.prototype.preload.call(this);
-    this.addSpriteSheet('characterSprite', 'spaceship.png', 143, 86);
-    this.addImage('background', 'spaceground.png');
+    this.addSpriteSheet('characterSprite', 'images/spaceship.png', 143, 86);
+    this.addImage('background', 'images/spaceground.png');
 }
 
 myState.create = function(){
@@ -43,8 +52,8 @@ myState.update = function(){
     //move down
     if (this.downKey.isDown) {
         this.facing = 'idle';
-        if (this.character.transform.y < 400) {
-            this.character.transform.y += 3;
+        if (this.character.transform.y < 330) {
+            this.character.transform.y += 10;
         }
         if (this.character.animation.currentAnimation.name != 'idle') {
             this.character.animation.switchTo('idle');
@@ -54,7 +63,7 @@ myState.update = function(){
     else if (this.leftKey.isDown) {
         this.facing = 'idle';
         if (this.character.transform.x > 3) {
-            this.character.transform.x -= 3;
+            this.character.transform.x -= 10;
         }
         if (this.character.animation.currentAnimation.name != 'moveleft') {
             this.character.animation.switchTo('moveleft');
@@ -63,8 +72,8 @@ myState.update = function(){
     //move right
     else if (this.rightKey.isDown) {
         this.facing = 'idle';
-        if (this.character.transform.x < 600) {
-            this.character.transform.x += 3;
+        if (this.character.transform.x < 500) {
+            this.character.transform.x += 10;
         }
         if (this.character.animation.currentAnimation.name != 'idle') {
             this.character.animation.switchTo('idle');
@@ -74,7 +83,7 @@ myState.update = function(){
     else if (this.upKey.isDown) {
         this.facing = 'idle';
         if (this.character.transform.y > 3) {
-            this.character.transform.y -= 3;
+            this.character.transform.y -= 10;
         };
         if (this.character.animation.currentAnimation.name != 'idle') {
             this.character.animation.switchTo('idle');
