@@ -56,7 +56,25 @@ HTML5
 ## Aufgabenfelder
 
 * Programmierung
-** jlal
+    * KI/Verhalten der Gegner
+    * Leap Controller einbinden
+    * Raumschiffbewegung + Animation
+    * verschiedene Waffen
+    * Level bauen
+    * Score + Menu (Rahmen)
+
+
 * Game Design
+    * Balancing (Leben vom Raumschiff, Gegnerstärke, Angriffsstärke der Waffen)
+    * Ziel des Spiels, Level Design
+    * Screen Design
+    * Steuerung
+    * Menu Design
+    * 
 
 * Grafiken
+    * eigenes Raumschiff
+    * Gegnerraumschiffe
+    * Waffenprojektile
+    * Hintergrund
+    
