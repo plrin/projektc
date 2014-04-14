@@ -72,9 +72,9 @@ HTML5
     * Menu Design
     * 
 
-* Grafiken
+* Grafiken + Sounds
     * eigenes Raumschiff
     * Gegnerraumschiffe
     * Waffenprojektile
     * Hintergrund
-    
+    * Musik + Sounds (Effekte von Schüssen, Explosionen)    
