@@ -51,4 +51,12 @@ Pop n Twinbee http://youtu.be/sjIZHOi85wc
 HTML5
 * X-Type http://x-type.tresensa.com/?dst=A0058
 * Space Encounter https://www.space-encounter.net/
-* http://radiusraid.clay.io/ im freien raum bewegn
+* http://radiusraid.clay.io/ im freien raum bewegen
+
+## Aufgabenfelder
+
+* Programmierung
+** jlal
+* Game Design
+
+* Grafiken
