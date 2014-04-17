@@ -20,13 +20,15 @@ myState.preload = function(){
 myState.create = function(){
  
     Kiwi.State.prototype.create.call(this);
+    // initialize mouse
+    this.mouse = this.game.input.mouse;
 
     //game stage size and bg color
     myGame.stage.resize(700,500);
     myGame.stage.color = '273788';
  
     this.background = new Kiwi.GameObjects.StaticImage(this, this.textures['background'], 0, 0);
-    this.character = new Kiwi.GameObjects.Sprite(this, this.textures['characterSprite'], 250, 150);
+    this.character = new Kiwi.GameObjects.Sprite(this, this.textures['characterSprite'], 200,200);
     
     // key settings
     this.leftKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.LEFT);
@@ -53,6 +55,27 @@ myState.update = function(){
 
     // process and update game loop
     Kiwi.State.prototype.update.call(this);
+    //this.keyControl();
+    //this.findPos();
+    // moving character sprit by mouse postion
+    this.character.transform.x = this.findX();
+    this.character.transform.y = this.findY();
+}
+
+// finding the mouse postion
+myState.findX = function() {
+    this.xAxis = this.mouse.x - 60; 
+    //this.yAxis = this.mouse.y;
+    return this.xAxis;
+}
+
+myState.findY = function() {
+    //this.xAxis = this.mouse.x; 
+    this.yAxis = this.mouse.y - 40;
+    return this.yAxis;
+}
+
+myState.keyControl = function() {
     //move down
     if (this.downKey.isDown) {
         this.facing = 'idle';
@@ -91,7 +114,16 @@ myState.update = function(){
         };
         if (this.character.animation.currentAnimation.name != 'idle') {
             this.character.animation.switchTo('idle');
+        }
+    }
+    else if(this.mouse.isDown) {
+        this.facing = 'idle';
+        if (this.character.transform.y > 3) {
+            this.character.transform.y -= 10;
         };
+        if (this.character.animation.currentAnimation.name != 'idle') {
+            this.character.animation.switchTo('idle');
+        }
     }
     else {
         if (this.character.animation.currentAnimation.name != 'idle') {
