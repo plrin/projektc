@@ -56,23 +56,16 @@ myState.update = function(){
     // process and update game loop
     Kiwi.State.prototype.update.call(this);
     //this.keyControl();
-    //this.findPos();
     // moving character sprit by mouse postion
-    this.character.transform.x = this.findX();
-    this.character.transform.y = this.findY();
+    this.mouseControl();
 }
 
-// finding the mouse postion
-myState.findX = function() {
-    this.xAxis = this.mouse.x - 60; 
-    //this.yAxis = this.mouse.y;
-    return this.xAxis;
-}
 
-myState.findY = function() {
-    //this.xAxis = this.mouse.x; 
+myState.mouseControl = function() {
+    this.xAxis = this.mouse.x - 60;
     this.yAxis = this.mouse.y - 40;
-    return this.yAxis;
+    this.character.transform.x = this.xAxis;
+    this.character.transform.y = this.yAxis;
 }
 
 myState.keyControl = function() {
