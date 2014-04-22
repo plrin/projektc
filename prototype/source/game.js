@@ -15,6 +15,7 @@ myState.preload = function(){
     Kiwi.State.prototype.preload.call(this);
     this.addSpriteSheet('characterSprite', 'images/spaceship.png', 143, 86);
     this.addImage('background', 'images/spaceground.png');
+    this.addImage('cannonBall', 'images/cannonBall.png');
 }
 
 myState.create = function(){
@@ -35,6 +36,7 @@ myState.create = function(){
     this.rightKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.RIGHT);
     this.downKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.DOWN);
     this.upKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.UP);
+    this.shootKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.Q);
 
     this.character.animation.add('idle', [0], 0.1, false);
     // name, index of pic, animationtime, loop
@@ -44,9 +46,14 @@ myState.create = function(){
     //start image
     this.facing = 'middle';
 
+    //adding groups
+    this.bulletGroup = new Kiwi.Group(this);
+
+
     this.character.animation.play('idle');
     this.addChild(this.background);
     this.addChild(this.character);
+    this.addChild(this.bulletGroup);
 
 }
 
@@ -58,6 +65,7 @@ myState.update = function(){
     //this.keyControl();
     // moving character sprit by mouse postion
     this.mouseControl();
+    this.shoot();
 }
 
 
@@ -124,6 +132,34 @@ myState.keyControl = function() {
         }
     }
 }
+
+// function for shooting a bullet
+// creating a new object from bullet in a group
+myState.shoot = function() {
+    if (this.shootKey.isDown) {
+        this.bulletGroup.addChild(new Bullet(this, this.character.x + 60, this.character.y - 10, 0,  -200 * this.character.scaleY));
+    }
+}
+
+
+var Bullet = function(state, x, y, xVelo, yVelo) {
+    Kiwi.GameObjects.Sprite.call(this, state, state.textures['cannonBall'], x, y, false);
+
+    this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
+    this.physics.velocity.x = xVelo;
+    this.physics.velocity.y = yVelo;
+    Bullet.prototype.update = function(){
+        Kiwi.GameObjects.Sprite.prototype.update.call(this);
+        this.physics.update();
+
+        if (this.y > myGame.stage.width || this.y < 0 ) {
+            this.destroy();
+        }
+    }
+
+}
+Kiwi.extend(Bullet,Kiwi.GameObjects.Sprite);
+
 
 myGame.states.addState(myState);
 myGame.states.switchState('myState');
