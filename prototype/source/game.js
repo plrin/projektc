@@ -71,8 +71,8 @@ myState.update = function(){
     // process and update game loop
     Kiwi.State.prototype.update.call(this);
     //this.keyControl();
-    // moving character sprit by mouse postion
     this.mouseControl();
+    this.checkCollisions();
     //this.shoot();
 
     if ((this.shootKey.isDown) && (allowShoot == true)) {
@@ -157,7 +157,6 @@ myState.shoot = function() {
     }
 }
 
-<<<<<<< HEAD
 myState.spawnFoe = function() {
     var w = myGame.stage.width;
     var r = Math.floor(Math.random() * w);
@@ -166,12 +165,23 @@ myState.spawnFoe = function() {
 }
 
 
-=======
-myState.enableShoot = function(){
+myState.enableShoot = function() {
     allowShoot = true;
 }
 
->>>>>>> FETCH_HEAD
+myState.checkCollisions = function() {
+    var foes = this.foeGroup.members;
+    var bullets = this.bulletGroup.members;
+    for (var i = 0; i < foes.length; i++) {
+        for (var j = 0; j < bullets.length; j++) {
+            if (foes[i].physics.overlaps(bullets[j])) {
+                foes[i].destroy();
+                bullets[j].destroy();
+                break;
+            }
+        }  
+    }
+}
 
 var Bullet = function(state, x, y, xVelo, yVelo) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['cannonBall'], x, y, false);
@@ -194,6 +204,8 @@ Kiwi.extend(Bullet,Kiwi.GameObjects.Sprite);
 
 var MySpaceship = function(state, x, y) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['characterSprite'], x, y);
+
+    this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
 
     MySpaceship.prototype.update = function() {
         Kiwi.GameObjects.Sprite.prototype.update.call(this);
