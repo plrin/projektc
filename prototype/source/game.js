@@ -215,7 +215,7 @@ var MySpaceship = function(state, x, y) {
 Kiwi.extend(MySpaceship, Kiwi.GameObjects.Sprite);
 
 var FoeSpaceship = function(state, x, y, xVelo, yVelo) {
-    Kiwi.GameObjects. Sprite.call(this, state, state.textures['foeSprite'], x ,y, false);
+    Kiwi.GameObjects.Sprite.call(this, state, state.textures['foeSprite'], x ,y, false);
     
     this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
     this.physics.velocity.x = xVelo;
