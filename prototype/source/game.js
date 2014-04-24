@@ -9,6 +9,9 @@ var myGame = new Kiwi.Game();
 // create new state, contain logic for animation, controlling update
 var myState = new Kiwi.State('myState');
 
+//global variables
+allowShoot = true;
+
 // load resources, give resource a reference
 
 myState.preload = function() {
@@ -59,6 +62,7 @@ myState.create = function() {
     this.addChild(this.bulletGroup);
     this.addChild(this.foeGroup);
 
+    this.game.time.clock.units = 250;
 }
 
 // moves
@@ -69,7 +73,12 @@ myState.update = function(){
     //this.keyControl();
     // moving character sprit by mouse postion
     this.mouseControl();
-    this.shoot();
+    //this.shoot();
+
+    if ((this.shootKey.isDown) && (allowShoot == true)) {
+        this.shoot();
+    }
+
 }
 
 
@@ -141,10 +150,14 @@ myState.keyControl = function() {
 // creating a new object from bullet in a group
 myState.shoot = function() {
     if (this.shootKey.isDown) {
-        this.bulletGroup.addChild(new Bullet(this, this.character.x + 60, this.character.y - 10, 0,  -200 * this.character.scaleY));
+        allowShoot = false;
+        this.bulletGroup.addChild(new Bullet(this, this.character.x + 60, this.character.y - 10, 0,  -100 * this.character.scaleY));
+        this.timer = this.game.time.clock.createTimer('shoot', 0.33, 1, true);
+        this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_STOP, this.enableShoot, this);
     }
 }
 
+<<<<<<< HEAD
 myState.spawnFoe = function() {
     var w = myGame.stage.width;
     var r = Math.floor(Math.random() * w);
@@ -153,6 +166,12 @@ myState.spawnFoe = function() {
 }
 
 
+=======
+myState.enableShoot = function(){
+    allowShoot = true;
+}
+
+>>>>>>> FETCH_HEAD
 
 var Bullet = function(state, x, y, xVelo, yVelo) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['cannonBall'], x, y, false);
