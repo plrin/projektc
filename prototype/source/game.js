@@ -11,26 +11,27 @@ var myState = new Kiwi.State('myState');
 
 // load resources, give resource a reference
 
-myState.preload = function(){
+myState.preload = function() {
     Kiwi.State.prototype.preload.call(this);
     this.addSpriteSheet('characterSprite', 'images/spaceship.png', 143, 86);
+    this.addSpriteSheet('foeSprite', 'images/foeship.png', 91, 86);
     this.addImage('background', 'images/spaceground.png');
     this.addImage('cannonBall', 'images/cannonBall.png');
 }
 
-myState.create = function(){
+myState.create = function() {
  
-    Kiwi.State.prototype.create.call(this);
-    // initialize mouse
-    this.mouse = this.game.input.mouse;
+    Kiwi.State.prototype.create.call(this);    
 
     //game stage size and bg color
-    myGame.stage.resize(700,500);
+    myGame.stage.resize(800,600);
     myGame.stage.color = '273788';
  
+    // loading game elements
     this.background = new Kiwi.GameObjects.StaticImage(this, this.textures['background'], 0, 0);
-    this.character = new Kiwi.GameObjects.Sprite(this, this.textures['characterSprite'], 200,200);
-    
+    this.character = new MySpaceship(this, 200,200);
+    this.mouse = this.game.input.mouse;
+
     // key settings
     this.leftKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.LEFT);
     this.rightKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.RIGHT);
@@ -38,22 +39,25 @@ myState.create = function(){
     this.upKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.UP);
     this.shootKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.Q);
 
-    this.character.animation.add('idle', [0], 0.1, false);
+    // animations 
     // name, index of pic, animationtime, loop
+    this.character.animation.add('idle', [0], 0.1, false);
     this.character.animation.add('moveleft' [1], 0.1, false);
     this.character.animation.add('moveright' [2], 0.1, false);
 
-    //start image
-    this.facing = 'middle';
+    // timer for spawning foeships
+    this.timer = this.game.time.clock.createTimer('spawnFoe', 1, -1, true);
+    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnFoe, this);
 
-    //adding groups
+    // Groups
     this.bulletGroup = new Kiwi.Group(this);
-
+    this.foeGroup = new Kiwi.Group(this);
 
     this.character.animation.play('idle');
     this.addChild(this.background);
     this.addChild(this.character);
     this.addChild(this.bulletGroup);
+    this.addChild(this.foeGroup);
 
 }
 
@@ -141,6 +145,14 @@ myState.shoot = function() {
     }
 }
 
+myState.spawnFoe = function() {
+    var w = myGame.stage.width;
+    var r = Math.floor(Math.random() * w);
+    //var r = 100;
+    this.foeGroup.addChild(new FoeSpaceship(this, r, 0, 0, 10));
+}
+
+
 
 var Bullet = function(state, x, y, xVelo, yVelo) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['cannonBall'], x, y, false);
@@ -148,11 +160,12 @@ var Bullet = function(state, x, y, xVelo, yVelo) {
     this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
     this.physics.velocity.x = xVelo;
     this.physics.velocity.y = yVelo;
+
     Bullet.prototype.update = function(){
         Kiwi.GameObjects.Sprite.prototype.update.call(this);
         this.physics.update();
 
-        if (this.y > myGame.stage.width || this.y < 0 ) {
+        if (this.y > myGame.stage.height || this.y < 0 ) {
             this.destroy();
         }
     }
@@ -160,6 +173,33 @@ var Bullet = function(state, x, y, xVelo, yVelo) {
 }
 Kiwi.extend(Bullet,Kiwi.GameObjects.Sprite);
 
+var MySpaceship = function(state, x, y) {
+    Kiwi.GameObjects.Sprite.call(this, state, state.textures['characterSprite'], x, y);
+
+    MySpaceship.prototype.update = function() {
+        Kiwi.GameObjects.Sprite.prototype.update.call(this);
+    }
+
+}
+Kiwi.extend(MySpaceship, Kiwi.GameObjects.Sprite);
+
+var FoeSpaceship = function(state, x, y, xVelo, yVelo) {
+    Kiwi.GameObjects. Sprite.call(this, state, state.textures['foeSprite'], x ,y, false);
+    
+    this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
+    this.physics.velocity.x = xVelo;
+    this.physics.velocity.y = yVelo;
+
+    FoeSpaceship.prototype.update = function() {
+        Kiwi.GameObjects.Sprite.prototype.update.call(this);
+        this.physics.update();
+
+        if (this.y > myGame.stage.height -100) {
+            this.destroy();
+        }
+    }
+}
+Kiwi.extend(FoeSpaceship, Kiwi.GameObjects.Sprite);
 
 myGame.states.addState(myState);
 myGame.states.switchState('myState');
