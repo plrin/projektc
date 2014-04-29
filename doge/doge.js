@@ -16,6 +16,7 @@ myState.preload = function() {
     this.addSpriteSheet('doge', 'doge.png', 110, 100);
     this.addSpriteSheet('nyan', 'nyan.png', 100, 61);
     this.addImage('laser', 'laser.png');
+    this.addImage('burger', 'burger.png');
 }
 
 myState.create = function() {
@@ -41,13 +42,19 @@ myState.create = function() {
     // timer for spawning foeships
     this.timer = this.game.time.clock.createTimer('spawnCat', 1, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCat, this);
+    // timer for cat shoot
+    this.timer = this.game.time.clock.createTimer('catShoot', 5, -1, true);
+    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.catShoot, this);
+    
 
     // Groups
     this.laserGroup = new Kiwi.Group(this);
+    this.burgerGroup = new Kiwi.Group(this);
     this.catGroup = new Kiwi.Group(this);
 
     this.addChild(this.character);
     this.addChild(this.laserGroup);
+    this.addChild(this.burgerGroup);
     this.addChild(this.catGroup);
 
     this.game.time.clock.units = 1000;
@@ -68,7 +75,6 @@ myState.update = function(){
 
     // process and update game loop
     Kiwi.State.prototype.update.call(this);
-    //this.keyControl();
     this.mouseControl();
     this.checkCollisions();
     //this.shoot();
@@ -134,6 +140,39 @@ myState.checkCollisions = function() {
     }
 }
 
+myState.catShoot = function() {
+    var cats = this.catGroup.members;
+    var numberCats = cats.length;
+    var i = Math.floor(Math.random() * numberCats) - 1;
+
+    this.burgerGroup.addChild(new Burger(this, cats[0].x, cats[0].y, 10, 10));
+
+}
+
+myState.createBurger = function() {
+    this.burgerGroup.addChild(new Burger(this, this.character.x + 33, this.character.y + 37, 100, 0));
+
+}
+
+var Burger = function(state, x, y, xVelo, yVelo) {
+    Kiwi.GameObjects.Sprite.call(this, state, state.textures['burger'], x, y, false);
+
+    this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
+    this.physics.velocity.x = xVelo;
+    this.physics.velocity.y = yVelo;
+
+    Burger.prototype.update = function(){
+        Kiwi.GameObjects.Sprite.prototype.update.call(this);
+        this.physics.update();
+
+        if (this.x > myGame.stage.width || this.x < 0 || this.y > myGame.stage.height || this.y < 0) {
+            this.destroy();
+        }
+    }
+}
+Kiwi.extend(Burger, Kiwi.GameObjects.Sprite);
+
+
 var Laser = function(state, x, y, xVelo, yVelo) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['laser'], x, y, false);
 
@@ -149,7 +188,6 @@ var Laser = function(state, x, y, xVelo, yVelo) {
             this.destroy();
         }
     }
-
 }
 Kiwi.extend(Laser, Kiwi.GameObjects.Sprite);
 
