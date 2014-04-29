@@ -135,7 +135,7 @@ myState.checkCollisions = function() {
     for (var i = 0; i < cats.length; i++) {
         if (cats[i].physics.overlaps(this.character)) {
             cats[i].destroy();
-            this.character.destroy();
+            //this.character.destroy();
         }  
     }
 }
