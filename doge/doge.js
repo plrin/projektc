@@ -39,7 +39,7 @@ myState.create = function() {
 
     
     // timer for spawning foeships
-    this.timer = this.game.time.clock.createTimer('spawnCat', 5, -1, true);
+    this.timer = this.game.time.clock.createTimer('spawnCat', 1, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCat, this);
 
     // Groups
@@ -51,6 +51,16 @@ myState.create = function() {
     this.addChild(this.catGroup);
 
     this.game.time.clock.units = 1000;
+
+    this.score = 0;
+
+    //Creating HUD Widgets
+
+    this.scoreBoard = new Kiwi.HUD.Widget.TextField(this.game, "Your score: 0", 10, 30);
+    this.scoreBoard.style.fontFamily = "helvetica";
+
+    //Adding HUD elements to defaultHUD
+    this.game.huds.defaultHUD.addWidget(this.scoreBoard);
 }
 
 // moves
@@ -109,8 +119,17 @@ myState.checkCollisions = function() {
             if (cats[i].physics.overlaps(lasers[j])) {
                 cats[i].destroy();
                 lasers[j].destroy();
+                this.score += 10;
+                this.scoreBoard.text = "Your score: " + this.score;
                 break;
             }
+        }  
+    }
+
+    for (var i = 0; i < cats.length; i++) {
+        if (cats[i].physics.overlaps(this.character)) {
+            cats[i].destroy();
+            this.character.destroy();
         }  
     }
 }
