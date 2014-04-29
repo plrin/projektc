@@ -49,7 +49,7 @@ myState.create = function() {
     this.character.animation.add('moveright' [2], 0.1, false);
 
     // timer for spawning foeships
-    this.timer = this.game.time.clock.createTimer('spawnFoe', 1, -1, true);
+    this.timer = this.game.time.clock.createTimer('spawnFoe', 5, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnFoe, this);
 
     // Groups
@@ -62,7 +62,7 @@ myState.create = function() {
     this.addChild(this.bulletGroup);
     this.addChild(this.foeGroup);
 
-    this.game.time.clock.units = 250;
+    this.game.time.clock.units = 1000;
 }
 
 // moves
@@ -70,7 +70,6 @@ myState.update = function(){
 
     // process and update game loop
     Kiwi.State.prototype.update.call(this);
-    //this.keyControl();
     this.mouseControl();
     this.checkCollisions();
     //this.shoot();
@@ -89,62 +88,7 @@ myState.mouseControl = function() {
     this.character.transform.y = this.yAxis;
 }
 
-myState.keyControl = function() {
-    //move down
-    if (this.downKey.isDown) {
-        this.facing = 'idle';
-        if (this.character.transform.y < 330) {
-            this.character.transform.y += 10;
-        }
-        if (this.character.animation.currentAnimation.name != 'idle') {
-            this.character.animation.switchTo('idle');
-        }
-    }
-    //move left
-    else if (this.leftKey.isDown) {
-        this.facing = 'idle';
-        if (this.character.transform.x > 3) {
-            this.character.transform.x -= 10;
-        }
-        if (this.character.animation.currentAnimation.name != 'moveleft') {
-            this.character.animation.switchTo('moveleft');
-        }
-    }
-    //move right
-    else if (this.rightKey.isDown) {
-        this.facing = 'idle';
-        if (this.character.transform.x < 500) {
-            this.character.transform.x += 10;
-        }
-        if (this.character.animation.currentAnimation.name != 'idle') {
-            this.character.animation.switchTo('idle');
-        }
-    }
-    //move up
-    else if (this.upKey.isDown) {
-        this.facing = 'idle';
-        if (this.character.transform.y > 3) {
-            this.character.transform.y -= 10;
-        };
-        if (this.character.animation.currentAnimation.name != 'idle') {
-            this.character.animation.switchTo('idle');
-        }
-    }
-    else if(this.mouse.isDown) {
-        this.facing = 'idle';
-        if (this.character.transform.y > 3) {
-            this.character.transform.y -= 10;
-        };
-        if (this.character.animation.currentAnimation.name != 'idle') {
-            this.character.animation.switchTo('idle');
-        }
-    }
-    else {
-        if (this.character.animation.currentAnimation.name != 'idle') {
-            this.character.animation.switchTo('idle');
-        }
-    }
-}
+
 
 // function for shooting a bullet
 // creating a new object from bullet in a group
@@ -152,7 +96,7 @@ myState.shoot = function() {
     if (this.shootKey.isDown) {
         allowShoot = false;
         this.bulletGroup.addChild(new Bullet(this, this.character.x + 60, this.character.y - 10, 0,  -100 * this.character.scaleY));
-        this.timer = this.game.time.clock.createTimer('shoot', 0.33, 1, true);
+        this.timer = this.game.time.clock.createTimer('shoot', .5, 1, true);
         this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_STOP, this.enableShoot, this);
     }
 }

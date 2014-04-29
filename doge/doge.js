@@ -39,7 +39,7 @@ myState.create = function() {
 
     
     // timer for spawning foeships
-    this.timer = this.game.time.clock.createTimer('spawnCat', 1, -1, true);
+    this.timer = this.game.time.clock.createTimer('spawnCat', 5, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCat, this);
 
     // Groups
@@ -50,7 +50,7 @@ myState.create = function() {
     this.addChild(this.laserGroup);
     this.addChild(this.catGroup);
 
-    this.game.time.clock.units = 250;
+    this.game.time.clock.units = 1000;
 }
 
 // moves
@@ -84,7 +84,7 @@ myState.shoot = function() {
     if (this.shootKey.isDown) {
         allowShoot = false;
         this.laserGroup.addChild(new Laser(this, this.character.x + 33, this.character.y + 37, 100, 0));
-        this.timer = this.game.time.clock.createTimer('shoot', 0.33, 1, true);
+        this.timer = this.game.time.clock.createTimer('shoot', 0.5, 1, true);
         this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_STOP, this.enableShoot, this);
     }
 }
