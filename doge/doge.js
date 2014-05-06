@@ -43,7 +43,7 @@ myState.create = function() {
     this.timer = this.game.time.clock.createTimer('spawnCat', 1, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCat, this);
     // timer for cat shoot
-    this.timer = this.game.time.clock.createTimer('catShoot', 5, -1, true);
+    this.timer = this.game.time.clock.createTimer('catShoot', 1, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.catShoot, this);
     
 
@@ -144,27 +144,30 @@ myState.catShoot = function() {
     var cats = this.catGroup.members;
     var numberCats = cats.length;
     var i = Math.floor(Math.random() * numberCats) - 1;
-
-    this.burgerGroup.addChild(new Burger(this, cats[0].x, cats[0].y, 10, 10));
+    // centerPoint is the position of the cat, start point of bullet
+    var centerPoint = new Kiwi.Geom.Point(cats[i+1].x, cats[i+1].y);
+    // current position of the mouse/character
+    var mousePoint = new Kiwi.Geom.Point(this.mouse.x, this.mouse.y);
+    // w = angle from cat to mouse
+    var w = centerPoint.angleTo(mousePoint);
+    this.burgerGroup.addChild(new Burger(this, cats[i+1].x, cats[i+1].y, w));
 
 }
 
-myState.createBurger = function() {
-    this.burgerGroup.addChild(new Burger(this, this.character.x + 33, this.character.y + 37, 100, 0));
 
-}
-
-var Burger = function(state, x, y, xVelo, yVelo) {
+var Burger = function(state, x, y, angle) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['burger'], x, y, false);
 
-    this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
-    this.physics.velocity.x = xVelo;
-    this.physics.velocity.y = yVelo;
+    this.angle = angle + (Math.PI / 2);
+    this.speed = 6;
+    this.rotation = -(angle);
 
     Burger.prototype.update = function(){
         Kiwi.GameObjects.Sprite.prototype.update.call(this);
-        this.physics.update();
-
+        
+        this.x += -1 * (Math.cos(this.angle) * this.speed);
+        this.y += (Math.sin(this.angle) * this.speed);
+        
         if (this.x > myGame.stage.width || this.x < 0 || this.y > myGame.stage.height || this.y < 0) {
             this.destroy();
         }
