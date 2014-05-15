@@ -5,6 +5,7 @@
 var myGame = new Kiwi.Game();
 // create new state, contain logic for animation, controlling update
 var myState = new Kiwi.State('myState');
+var color = "aaaaaa";
 
 //global variables
 allowShoot = true;
@@ -13,10 +14,10 @@ allowShoot = true;
 
 myState.preload = function() {
     Kiwi.State.prototype.preload.call(this);
-    this.addSpriteSheet('doge', '../assets/doge.png', 80, 97);
-    this.addSpriteSheet('nyan', '../assets/nyan.png', 100, 61);
-    this.addImage('laser', '../assets/laser.png');
-    this.addImage('burger', '../assets/burger.png');
+    this.addSpriteSheet('doge', 'doge.png', 110, 100);
+    this.addSpriteSheet('nyan', 'nyan.png', 100, 61);
+    this.addImage('laser', 'laser.png');
+    this.addImage('burger', 'burger.png');
 }
 
 myState.create = function() {
@@ -25,7 +26,10 @@ myState.create = function() {
 
     //game stage size and bg color
     myGame.stage.resize(800,600);
-    myGame.stage.color = '05ffd9';
+    //"05ffd9"
+   // myGame.stage.color = color;
+
+   
  
     // loading game elements
     this.character = new Doge(this, 200,200);
@@ -45,7 +49,9 @@ myState.create = function() {
     // timer for cat shoot
     this.timer = this.game.time.clock.createTimer('catShoot', 1, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.catShoot, this);
-    
+     //timer for color changing
+    this.timer = this.game.time.clock.createTimer('changeColor', 2, -1, true);
+    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.changeColor, this);
 
     // Groups
     this.laserGroup = new Kiwi.Group(this);
@@ -72,7 +78,7 @@ myState.create = function() {
 
 // moves
 myState.update = function(){
-
+    myGame.stage.color = color;
     // process and update game loop
     Kiwi.State.prototype.update.call(this);
     this.mouseControl();
@@ -85,10 +91,22 @@ myState.update = function(){
 
 }
 
+var count = 0;
+myState.changeColor = function(){
+    if (count == 0) {
+        color = "0000ff";
+    }else if (count == 1) {
+        color = "00ff00";
+    }
+    else {
+        color = "ff0000";
+    }
+    count++;
+}
 
 myState.mouseControl = function() {
-    this.xAxis = this.mouse.x - 35;
-    this.yAxis = this.mouse.y - 60;
+    this.xAxis = this.mouse.x - 60;
+    this.yAxis = this.mouse.y - 40;
     this.character.transform.x = this.xAxis;
     this.character.transform.y = this.yAxis;
 }
@@ -120,8 +138,6 @@ myState.enableShoot = function() {
 myState.checkCollisions = function() {
     var cats = this.catGroup.members;
     var lasers = this.laserGroup.members;
-    var burgers = this.burgerGroup.members;
-
     for (var i = 0; i < cats.length; i++) {
         for (var j = 0; j < lasers.length; j++) {
             if (cats[i].physics.overlaps(lasers[j])) {
@@ -140,16 +156,6 @@ myState.checkCollisions = function() {
             //this.character.destroy();
         }  
     }
-/*
-    for (var i = 0; i < burgers.length; i++) {
-        for (var j = 0; j < lasers.length; j++) {
-            if (burgers[i].physics.overlaps(lasers[j])) {
-                burgers[i].destroy();
-                lasers[j].destroy();
-            }
-        }
-    }
-*/
 }
 
 myState.catShoot = function() {
