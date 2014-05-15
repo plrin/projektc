@@ -5,6 +5,8 @@
 var myGame = new Kiwi.Game();
 // create new state, contain logic for animation, controlling update
 var myState = new Kiwi.State('myState');
+// Leap Plugin
+var myGame = new Kiwi.Game('', 'myGame', myState, {plugins:’LeapMotion’]});
 
 //global variables
 allowShoot = true;
