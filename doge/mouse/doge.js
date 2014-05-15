@@ -5,10 +5,7 @@
 var myGame = new Kiwi.Game();
 // create new state, contain logic for animation, controlling update
 var myState = new Kiwi.State('myState');
-var color = "000000";
-var r = "00";
-var g = "00";
-var b = "00";
+
 //global variables
 allowShoot = true;
 
@@ -28,10 +25,8 @@ myState.create = function() {
 
     //game stage size and bg color
     myGame.stage.resize(800,600);
-    //"05ffd9"
-   // myGame.stage.color = color;
+    myGame.stage.color = '05ffd9';
 
-   
  
     // loading game elements
     this.character = new Doge(this, 200,200);
@@ -52,7 +47,7 @@ myState.create = function() {
     this.timer = this.game.time.clock.createTimer('catShoot', 1, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.catShoot, this);
      //timer for color changing
-    this.timer = this.game.time.clock.createTimer('changeColor', 2, -1, true);
+    this.timer = this.game.time.clock.createTimer('changeColor', 0.5, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.changeColor, this);
 
     // Groups
@@ -80,7 +75,6 @@ myState.create = function() {
 
 // moves
 myState.update = function(){
-    myGame.stage.color = color;
     // process and update game loop
     Kiwi.State.prototype.update.call(this);
     this.mouseControl();
@@ -93,32 +87,10 @@ myState.update = function(){
 
 }
 
-myState.changeColor = function(){
-    var intR;
-    var intG;
-    var intB;
-    var random = ((Math.random() * 3 ) + 1);
-    if (random == 1) {
-        intR += parseInt(r, 16);
-        intR += 50;
-        r = intR.toString(16);
-    }
-    if (random == 2){
-        intG += parseInt(g, 16);
-        intG += 50;
-        g = intG.toString(16);
-    }
-    if (random == 3){
-        intB += parseInt(b, 16);
-        intB += 50;
-        b = intB.toString(16);
-    }
-    color = r + g + b;
-}
 
 myState.mouseControl = function() {
-    this.xAxis = this.mouse.x - 60;
-    this.yAxis = this.mouse.y - 40;
+    this.xAxis = this.mouse.x - 35;
+    this.yAxis = this.mouse.y - 60;
     this.character.transform.x = this.xAxis;
     this.character.transform.y = this.yAxis;
 }

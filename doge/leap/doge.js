@@ -102,8 +102,8 @@ myState.update = function(){
 
 myState.leapControl = function() {
     this.control.update();
-    this.character.x = (this.control.hands[0].posX * 1.7) + 400;
-    this.character.y = ((-1 * this.control.hands[0].posY) * 1.7) + 600;
+    this.character.x = (this.control.hands[0].posX * 4) + 400;
+    this.character.y = ((-1 * this.control.hands[0].posY) * 4) + 800;
 
 }
 
