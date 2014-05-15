@@ -120,6 +120,8 @@ myState.enableShoot = function() {
 myState.checkCollisions = function() {
     var cats = this.catGroup.members;
     var lasers = this.laserGroup.members;
+    var burgers = this.burgerGroup.members;
+
     for (var i = 0; i < cats.length; i++) {
         for (var j = 0; j < lasers.length; j++) {
             if (cats[i].physics.overlaps(lasers[j])) {
@@ -138,6 +140,16 @@ myState.checkCollisions = function() {
             //this.character.destroy();
         }  
     }
+/*
+    for (var i = 0; i < burgers.length; i++) {
+        for (var j = 0; j < lasers.length; j++) {
+            if (burgers[i].physics.overlaps(lasers[j])) {
+                burgers[i].destroy();
+                lasers[j].destroy();
+            }
+        }
+    }
+*/
 }
 
 myState.catShoot = function() {
