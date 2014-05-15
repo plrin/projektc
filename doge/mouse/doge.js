@@ -165,9 +165,9 @@ myState.catShoot = function() {
     // centerPoint is the position of the cat, start point of bullet
     var centerPoint = new Kiwi.Geom.Point(cats[i+1].x, cats[i+1].y);
     // current position of the mouse/character
-    var mousePoint = new Kiwi.Geom.Point(this.mouse.x, this.mouse.y);
+    var characterPoint = new Kiwi.Geom.Point(this.character.x, this.character.y);
     // w = angle from cat to mouse
-    var w = centerPoint.angleTo(mousePoint);
+    var w = centerPoint.angleTo(characterPoint);
     this.burgerGroup.addChild(new Burger(this, cats[i+1].x, cats[i+1].y, w));
 
 }
