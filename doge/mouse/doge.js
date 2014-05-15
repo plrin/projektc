@@ -14,10 +14,10 @@ allowShoot = true;
 
 myState.preload = function() {
     Kiwi.State.prototype.preload.call(this);
-    this.addSpriteSheet('doge', 'doge.png', 110, 100);
-    this.addSpriteSheet('nyan', 'nyan.png', 100, 61);
-    this.addImage('laser', 'laser.png');
-    this.addImage('burger', 'burger.png');
+    this.addSpriteSheet('doge', '../assets/doge.png', 80, 97);
+    this.addSpriteSheet('nyan', '../assets/nyan.png', 100, 61);
+    this.addImage('laser', '../assets/laser.png');
+    this.addImage('burger', '../assets/burger.png');
 }
 
 myState.create = function() {

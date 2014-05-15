@@ -2,11 +2,10 @@
  * DOGE VERSION
  */
 
-var myGame = new Kiwi.Game();
+var myGame = new Kiwi.Game("dogeContainer","myGame",myState,{plugins:["LEAPController"]});
 // create new state, contain logic for animation, controlling update
 var myState = new Kiwi.State('myState');
 // Leap Plugin
-var myGame = new Kiwi.Game('', 'myGame', myState, {plugins:’LeapMotion’]});
 
 //global variables
 allowShoot = true;
@@ -23,7 +22,11 @@ myState.preload = function() {
 
 myState.create = function() {
  
-    Kiwi.State.prototype.create.call(this);    
+    Kiwi.State.prototype.create.call(this); 
+
+    // leap controller keep track of all movments
+    this.control = Kiwi.Plugins.LEAPController.createController();
+   
 
     //game stage size and bg color
     myGame.stage.resize(800,600);
@@ -54,10 +57,11 @@ myState.create = function() {
     this.burgerGroup = new Kiwi.Group(this);
     this.catGroup = new Kiwi.Group(this);
 
-    this.addChild(this.character);
     this.addChild(this.laserGroup);
     this.addChild(this.burgerGroup);
     this.addChild(this.catGroup);
+    this.addChild(this.character);
+
 
     this.game.time.clock.units = 1000;
 
@@ -77,7 +81,19 @@ myState.update = function(){
 
     // process and update game loop
     Kiwi.State.prototype.update.call(this);
-    this.mouseControl();
+
+    // Leap Control
+    if (this.control.controllerConnected) {
+        this.control.update();
+        this.character.x = (this.control.hands[1].posX * 1.7) + 400;
+        this.character.y = ((-1 * this.control.hands[1].posY) * 1.7) + 600;
+
+    }
+    else {
+        //mouse control
+        this.mouseControl();
+    }
+
     this.checkCollisions();
     //this.shoot();
 
@@ -161,9 +177,9 @@ myState.catShoot = function() {
     // centerPoint is the position of the cat, start point of bullet
     var centerPoint = new Kiwi.Geom.Point(cats[i+1].x, cats[i+1].y);
     // current position of the mouse/character
-    var mousePoint = new Kiwi.Geom.Point(this.mouse.x, this.mouse.y);
+    var characterPoint = new Kiwi.Geom.Point(this.character.x, this.character.y);
     // w = angle from cat to mouse
-    var w = centerPoint.angleTo(mousePoint);
+    var w = centerPoint.angleTo(characterPoint);
     this.burgerGroup.addChild(new Burger(this, cats[i+1].x, cats[i+1].y, w));
 
 }
