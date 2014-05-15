@@ -5,8 +5,10 @@
 var myGame = new Kiwi.Game();
 // create new state, contain logic for animation, controlling update
 var myState = new Kiwi.State('myState');
-var color = "aaaaaa";
-
+var color = "000000";
+var r = "00";
+var g = "00";
+var b = "00";
 //global variables
 allowShoot = true;
 
@@ -91,17 +93,27 @@ myState.update = function(){
 
 }
 
-var count = 0;
 myState.changeColor = function(){
-    if (count == 0) {
-        color = "0000ff";
-    }else if (count == 1) {
-        color = "00ff00";
+    var intR;
+    var intG;
+    var intB;
+    var random = ((Math.random() * 3 ) + 1);
+    if (random == 1) {
+        intR += parseInt(r, 16);
+        intR += 50;
+        r = intR.toString(16);
     }
-    else {
-        color = "ff0000";
+    if (random == 2){
+        intG += parseInt(g, 16);
+        intG += 50;
+        g = intG.toString(16);
     }
-    count++;
+    if (random == 3){
+        intB += parseInt(b, 16);
+        intB += 50;
+        b = intB.toString(16);
+    }
+    color = r + g + b;
 }
 
 myState.mouseControl = function() {
