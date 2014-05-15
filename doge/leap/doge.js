@@ -84,10 +84,7 @@ myState.update = function(){
 
     // Leap Control
     if (this.control.controllerConnected) {
-        this.control.update();
-        this.character.x = (this.control.hands[1].posX * 1.7) + 400;
-        this.character.y = ((-1 * this.control.hands[1].posY) * 1.7) + 600;
-
+        this.leapControl();
     }
     else {
         //mouse control
@@ -103,6 +100,12 @@ myState.update = function(){
 
 }
 
+myState.leapControl = function() {
+    this.control.update();
+    this.character.x = (this.control.hands[0].posX * 1.7) + 400;
+    this.character.y = ((-1 * this.control.hands[0].posY) * 1.7) + 600;
+
+}
 
 myState.mouseControl = function() {
     this.xAxis = this.mouse.x - 35;
