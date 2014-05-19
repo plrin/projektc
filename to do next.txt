@@ -3,8 +3,18 @@ to do next
 - hintergrundbild (boden) *
 - hintergrund assets (pflanze, wolken) *
 - hintegrund assets spawnen (code) *
-- schießen mit hand ***
+
 - start/end punkt **
+- mehr collisions rein machen
+- boss KI/Leben
+
 - katzen und hund im bild spawnen/lassen *
-- sound(?) **
 - weitere gegner (2) **
+
+- schießen mit hand ***
+- sound(?) **
+
+
+8 bit pics http://superpixeltime.com/
+
+BUG: wenn keine katze im spiel, findet er keinen cnet point
