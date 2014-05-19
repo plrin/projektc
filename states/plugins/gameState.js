@@ -1,4 +1,3 @@
-
 var myState = new Kiwi.State('myState');
 
 //global variables
