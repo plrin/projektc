@@ -19,6 +19,8 @@ myState.preload = function() {
     this.addImage('laser', 'assets/laser.png');
     this.addImage('burger', 'assets/burger.png');
     this.addImage('cloud', 'assets/cloud.png');
+    this.addImage('boss', 'assets/BossCat.png');
+    this.addImage('catLaser', 'assets/laser2.png');
 }
 
 myState.create = function() {
@@ -54,6 +56,9 @@ myState.create = function() {
     // timer for spawning clouds
     this.timer = this.game.time.clock.createTimer('spawnCloud', 15, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCloud, this);
+    // timer for spawning Boss
+    this.timer = this.game.time.clock.createTimer('spawnBoss', 10, -1, true);
+    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnBossCat, this);
     
 
     // Groups
@@ -61,12 +66,13 @@ myState.create = function() {
     this.burgerGroup = new Kiwi.Group(this);
     this.catGroup = new Kiwi.Group(this);
     this.cloudGroup = new Kiwi.Group(this);
+    this.bossCatGroup = new Kiwi.Group(this);
     
     this.addChild(this.cloudGroup);
     this.addChild(this.laserGroup);
     this.addChild(this.burgerGroup);
     this.addChild(this.catGroup);
-    
+    this.addChild(this.bossCatGroup);
     this.addChild(this.character);
 
 
@@ -138,9 +144,23 @@ myState.spawnCat = function() {
     this.catGroup.addChild(new Cat(this, myGame.stage.width, r, -10, 0));
 }
 
+myState.spawnBossCat = function() {
+    this.bossCatGroup.addChild(new BossCat(this, (myGame.stage.width * 0.5) - 100, myGame.stage.height, 0, -10));
+    //create Timer to stop Boss from moving
+    this.timer = this.game.time.clock.createTimer('stopBoss', 3, -1, true);
+    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.stopBossCat, this);
+
+}
+
 myState.spawnCloud = function() {
     var r = 100 - Math.floor(Math.random() * 100);
     this.cloudGroup.addChild(new Cloud(this, myGame.stage.width, r, -5, 0));
+}
+
+myState.stopBossCat = function(){
+    var boss = this.bossCatGroup.members;
+    var i = 0;
+    boss[i].physics.velocity.y = 0;
 }
 
 
@@ -152,11 +172,31 @@ myState.checkCollisions = function() {
     var cats = this.catGroup.members;
     var lasers = this.laserGroup.members;
     var burgers = this.burgerGroup.members;
+    var boss = this.bossCatGroup.members;
 
+    //Laser Collisions
+    //Cats
     for (var i = 0; i < cats.length; i++) {
         for (var j = 0; j < lasers.length; j++) {
             if (cats[i].physics.overlaps(lasers[j])) {
                 cats[i].destroy();
+                lasers[j].destroy();
+                this.score += 100;
+                this.scoreBoard.text = "Your score: " + this.score;
+                break;
+            }
+        }  
+    }
+    //Boss
+    for (var i = 0; i < boss.length; i++) {
+        for (var j = 0; j < lasers.length; j++) {
+            if (boss[i].physics.overlaps(lasers[j])) {
+                if (boss[i].bossLife == 0){
+                    boss[i].destroy();
+                } 
+                else if (boss[i].bossLife >= 1){
+                    boss[i].bossLife -= 1;
+                }
                 lasers[j].destroy();
                 this.score += 10;
                 this.scoreBoard.text = "Your score: " + this.score;
@@ -266,6 +306,25 @@ var Cat = function(state, x, y, xVelo, yVelo) {
     }
 }
 Kiwi.extend(Cat, Kiwi.GameObjects.Sprite);
+
+var BossCat = function(state, x, y, xVelo, yVelo, bossLife) {
+    Kiwi.GameObjects.Sprite.call(this, state, state.textures['boss'], x ,y, false);
+    
+    this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
+    this.physics.velocity.x = xVelo;
+    this.physics.velocity.y = yVelo;
+    this.bossLife = 10;
+
+    BossCat.prototype.update = function() {
+        Kiwi.GameObjects.Sprite.prototype.update.call(this);
+        this.physics.update();
+
+        if (this.x < 100) {
+            this.destroy();
+        }
+    }
+}
+Kiwi.extend(BossCat, Kiwi.GameObjects.Sprite);
 
 var Cloud = function(state, x, y, xVelo, yVelo) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['cloud'], x ,y, false);
