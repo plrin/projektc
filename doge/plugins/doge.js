@@ -15,7 +15,7 @@ allowShoot = true;
 myState.preload = function() {
     Kiwi.State.prototype.preload.call(this);
     this.addSpriteSheet('doge', 'assets/doge.png', 80, 97);
-    this.addSpriteSheet('nyan', 'assets/nyan.png', 100, 61);
+    this.addSpriteSheet('nyan', 'assets/nyan.png', 91, 57);
     this.addImage('laser', 'assets/laser.png');
     this.addImage('burger', 'assets/burger.png');
     this.addImage('cloud', 'assets/cloud.png');
@@ -66,7 +66,6 @@ myState.create = function() {
     this.addChild(this.laserGroup);
     this.addChild(this.burgerGroup);
     this.addChild(this.catGroup);
-    
     this.addChild(this.character);
 
 
@@ -134,11 +133,7 @@ myState.shoot = function() {
 }
 
 myState.spawnCat = function() {
-<<<<<<< HEAD
     var r = Math.floor(Math.random() * 539);
-=======
-    var r = Math.floor(Math.random() * myGame.stage.height);
->>>>>>> FETCH_HEAD
     this.catGroup.addChild(new Cat(this, myGame.stage.width, r, -10, 0));
 }
 
@@ -282,7 +277,7 @@ var Cloud = function(state, x, y, xVelo, yVelo) {
         Kiwi.GameObjects.Sprite.prototype.update.call(this);
         this.physics.update();
 
-        if (this.x < 100) {
+        if (this.x < -100) {
             this.destroy();
         }
     }
