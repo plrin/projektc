@@ -3,8 +3,11 @@ to do next
 - hintergrundbild (boden) *
 - hintergrund assets (pflanze, wolken) *
 - hintegrund assets spawnen (code) *
-- schießen mit hand ***
+
 - start/end punkt **
+
 - katzen und hund im bild spawnen/lassen *
-- sound(?) **
 - weitere gegner (2) **
+
+- schießen mit hand ***
+- sound(?) **

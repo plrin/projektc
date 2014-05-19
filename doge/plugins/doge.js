@@ -127,9 +127,7 @@ myState.shoot = function() {
 }
 
 myState.spawnCat = function() {
-    var w = myGame.stage.height;
-    var r = Math.floor(Math.random() * w);
-    //var r = 100;
+    var r = Math.floor(Math.random() * 539);
     this.catGroup.addChild(new Cat(this, myGame.stage.width, r, -10, 0));
 }
 
@@ -250,7 +248,7 @@ var Cat = function(state, x, y, xVelo, yVelo) {
         Kiwi.GameObjects.Sprite.prototype.update.call(this);
         this.physics.update();
 
-        if (this.x < 100) {
+        if (this.x < -90) {
             this.destroy();
         }
     }
