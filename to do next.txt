@@ -5,6 +5,8 @@ to do next
 - hintegrund assets spawnen (code) *
 
 - start/end punkt **
+- mehr collisions rein machen
+- boss KI/Leben
 
 - katzen und hund im bild spawnen/lassen *
 - weitere gegner (2) **
