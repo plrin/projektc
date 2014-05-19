@@ -11,3 +11,8 @@ to do next
 
 - schießen mit hand ***
 - sound(?) **
+
+
+8 bit pics http://superpixeltime.com/
+
+BUG: wenn keine katze im spiel, findet er keinen cnet point
