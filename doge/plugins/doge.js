@@ -18,6 +18,7 @@ myState.preload = function() {
     this.addSpriteSheet('nyan', 'assets/nyan.png', 100, 61);
     this.addImage('laser', 'assets/laser.png');
     this.addImage('burger', 'assets/burger.png');
+    this.addImage('cloud', 'assets/cloud.png');
 }
 
 myState.create = function() {
@@ -50,16 +51,22 @@ myState.create = function() {
     // timer for cat shoot
     this.timer = this.game.time.clock.createTimer('catShoot', 1, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.catShoot, this);
+    // timer for spawning clouds
+    this.timer = this.game.time.clock.createTimer('spawnCloud', 15, -1, true);
+    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCloud, this);
     
 
     // Groups
     this.laserGroup = new Kiwi.Group(this);
     this.burgerGroup = new Kiwi.Group(this);
     this.catGroup = new Kiwi.Group(this);
-
+    this.cloudGroup = new Kiwi.Group(this);
+    
+    this.addChild(this.cloudGroup);
     this.addChild(this.laserGroup);
     this.addChild(this.burgerGroup);
     this.addChild(this.catGroup);
+    
     this.addChild(this.character);
 
 
@@ -127,10 +134,13 @@ myState.shoot = function() {
 }
 
 myState.spawnCat = function() {
-    var w = myGame.stage.height;
-    var r = Math.floor(Math.random() * w);
-    //var r = 100;
+    var r = Math.floor(Math.random() * myGame.stage.height);
     this.catGroup.addChild(new Cat(this, myGame.stage.width, r, -10, 0));
+}
+
+myState.spawnCloud = function() {
+    var r = 100 - Math.floor(Math.random() * 100);
+    this.cloudGroup.addChild(new Cloud(this, myGame.stage.width, r, -5, 0));
 }
 
 
@@ -256,6 +266,24 @@ var Cat = function(state, x, y, xVelo, yVelo) {
     }
 }
 Kiwi.extend(Cat, Kiwi.GameObjects.Sprite);
+
+var Cloud = function(state, x, y, xVelo, yVelo) {
+    Kiwi.GameObjects.Sprite.call(this, state, state.textures['cloud'], x ,y, false);
+    
+    this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
+    this.physics.velocity.x = xVelo;
+    this.physics.velocity.y = yVelo;
+
+    Cloud.prototype.update = function() {
+        Kiwi.GameObjects.Sprite.prototype.update.call(this);
+        this.physics.update();
+
+        if (this.x < 100) {
+            this.destroy();
+        }
+    }
+}
+Kiwi.extend(Cloud, Kiwi.GameObjects.Sprite);
 
 myGame.states.addState(myState);
 myGame.states.switchState('myState');
