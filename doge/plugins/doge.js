@@ -15,22 +15,21 @@ allowShoot = true;
 myState.preload = function() {
     Kiwi.State.prototype.preload.call(this);
     this.addSpriteSheet('doge', 'assets/doge.png', 80, 97);
-    this.addSpriteSheet('nyan', 'assets/nyan.png', 91, 57);
-    this.addSpriteSheet('mex', 'assets/mexcat.png', 100, 64);
+    this.addSpriteSheet('nyan', 'assets/nyan.png', 100, 61);
     this.addImage('laser', 'assets/laser.png');
     this.addImage('burger', 'assets/burger.png');
     this.addImage('cloud', 'assets/cloud.png');
-<<<<<<< HEAD
     this.addImage('boss', 'assets/BossCat.png');
     this.addImage('catLaser', 'assets/laser2.png');
-=======
-    this.addImage('cake', 'assets/cake.png');
->>>>>>> FETCH_HEAD
 }
 
 myState.create = function() {
  
     Kiwi.State.prototype.create.call(this); 
+
+    // leap controller keep track of all movments
+    this.control = Kiwi.Plugins.LEAPController.createController();
+   
 
     //game stage size and bg color
     myGame.stage.resize(800,600);
@@ -39,25 +38,21 @@ myState.create = function() {
     // loading game elements
     this.character = new Doge(this, 200,200);
     this.mouse = this.game.input.mouse;
-    // leap controller keep track of all movments
-    this.control = Kiwi.Plugins.LEAPController.createController();
 
     // key settings
+    this.leftKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.LEFT);
+    this.rightKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.RIGHT);
+    this.downKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.DOWN);
+    this.upKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.UP);
     this.shootKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.Q);
 
     
-    // timer for spawning nyan cat
-    this.timer = this.game.time.clock.createTimer('spawnCat', 3, -1, true);
+    // timer for spawning foeships
+    this.timer = this.game.time.clock.createTimer('spawnCat', 1, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCat, this);
-    // timer for spawning mexican cat
-    this.timer = this.game.time.clock.createTimer('spawnMex', 5, -1, true);
-    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnMex, this);
     // timer for cat shoot
-    this.timer = this.game.time.clock.createTimer('catShoot', 4, -1, true);
+    this.timer = this.game.time.clock.createTimer('catShoot', 1, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.catShoot, this);
-    // timer for mexican cat bombing 
-    this.timer = this.game.time.clock.createTimer('bombShoot', 5, -1, true);
-    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.bombShoot, this);
     // timer for spawning clouds
     this.timer = this.game.time.clock.createTimer('spawnCloud', 15, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCloud, this);
@@ -70,21 +65,14 @@ myState.create = function() {
     this.laserGroup = new Kiwi.Group(this);
     this.burgerGroup = new Kiwi.Group(this);
     this.catGroup = new Kiwi.Group(this);
-    this.mexGroup = new Kiwi.Group(this);
-    this.cakeGroup = new Kiwi.Group(this);
     this.cloudGroup = new Kiwi.Group(this);
     this.bossCatGroup = new Kiwi.Group(this);
     
     this.addChild(this.cloudGroup);
     this.addChild(this.laserGroup);
     this.addChild(this.burgerGroup);
-    this.addChild(this.cakeGroup);
     this.addChild(this.catGroup);
-<<<<<<< HEAD
     this.addChild(this.bossCatGroup);
-=======
-    this.addChild(this.mexGroup);
->>>>>>> FETCH_HEAD
     this.addChild(this.character);
 
 
@@ -152,12 +140,8 @@ myState.shoot = function() {
 }
 
 myState.spawnCat = function() {
-    var h = Math.floor(Math.random() * 539);
-    this.catGroup.addChild(new Cat(this, myGame.stage.width, h, -10, 0));
-}
-
-myState.spawnMex = function() {
-    this.mexGroup.addChild(new Mex(this, myGame.stage.width, 50, -10, 0));
+    var r = Math.floor(Math.random() * myGame.stage.height);
+    this.catGroup.addChild(new Cat(this, myGame.stage.width, r, -10, 0));
 }
 
 myState.spawnBossCat = function() {
@@ -253,14 +237,6 @@ myState.catShoot = function() {
 
 }
 
-myState.bombShoot = function() {
-    var mexs = this.mexGroup.members;
-    var numberMexs = mexs.length;
-    var i = Math.floor(Math.random() * numberMexs) - 1;
-    
-    this.cakeGroup.addChild(new Cake(this, mexs[i+1].x, mexs[i+1].y, -10, 10));
-}
-
 
 var Burger = function(state, x, y, angle) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['burger'], x, y, false);
@@ -281,24 +257,6 @@ var Burger = function(state, x, y, angle) {
     }
 }
 Kiwi.extend(Burger, Kiwi.GameObjects.Sprite);
-
-var Cake = function(state, x, y, xVelo, yVelo) {
-    Kiwi.GameObjects.Sprite.call(this, state, state.textures['cake'], x, y, false);
-
-    this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
-    this.physics.velocity.x = xVelo;
-    this.physics.velocity.y = yVelo;
-
-    Cake.prototype.update = function(){
-        Kiwi.GameObjects.Sprite.prototype.update.call(this);
-        this.physics.update();
-
-        if (this.y > 500) {
-            this.destroy();
-        }
-    }
-}
-Kiwi.extend(Cake, Kiwi.GameObjects.Sprite);
 
 
 var Laser = function(state, x, y, xVelo, yVelo) {
@@ -342,25 +300,19 @@ var Cat = function(state, x, y, xVelo, yVelo) {
         Kiwi.GameObjects.Sprite.prototype.update.call(this);
         this.physics.update();
 
-        if (this.x < -90) {
+        if (this.x < 100) {
             this.destroy();
         }
     }
 }
 Kiwi.extend(Cat, Kiwi.GameObjects.Sprite);
 
-<<<<<<< HEAD
 var BossCat = function(state, x, y, xVelo, yVelo, bossLife) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['boss'], x ,y, false);
-=======
-var Mex = function(state, x, y, xVelo, yVelo) {
-    Kiwi.GameObjects.Sprite.call(this, state, state.textures['mex'], x ,y, false);
->>>>>>> FETCH_HEAD
     
     this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
     this.physics.velocity.x = xVelo;
     this.physics.velocity.y = yVelo;
-<<<<<<< HEAD
     this.bossLife = 10;
 
     BossCat.prototype.update = function() {
@@ -368,23 +320,11 @@ var Mex = function(state, x, y, xVelo, yVelo) {
         this.physics.update();
 
         if (this.x < 100) {
-=======
-
-    Mex.prototype.update = function() {
-        Kiwi.GameObjects.Sprite.prototype.update.call(this);
-        this.physics.update();
-
-        if (this.x < -90) {
->>>>>>> FETCH_HEAD
             this.destroy();
         }
     }
 }
-<<<<<<< HEAD
 Kiwi.extend(BossCat, Kiwi.GameObjects.Sprite);
-=======
-Kiwi.extend(Mex, Kiwi.GameObjects.Sprite);
->>>>>>> FETCH_HEAD
 
 var Cloud = function(state, x, y, xVelo, yVelo) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['cloud'], x ,y, false);
@@ -397,7 +337,7 @@ var Cloud = function(state, x, y, xVelo, yVelo) {
         Kiwi.GameObjects.Sprite.prototype.update.call(this);
         this.physics.update();
 
-        if (this.x < -100) {
+        if (this.x < 100) {
             this.destroy();
         }
     }
