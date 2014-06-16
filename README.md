@@ -14,7 +14,7 @@ http://www.kiwijs.org/
 
 ##Leap Frameworks
 * Kiwi.js Plugin
-* eigenes von Leap
+-* eigenes von Leap-
 
 ##Arbeitsschritte
 * Spielidee

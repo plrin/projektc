@@ -20,12 +20,10 @@ myState.preload = function() {
     this.addImage('laser', 'assets/laser.png');
     this.addImage('burger', 'assets/burger.png');
     this.addImage('cloud', 'assets/cloud.png');
-<<<<<<< HEAD
     this.addImage('boss', 'assets/BossCat.png');
     this.addImage('catLaser', 'assets/laser2.png');
-=======
     this.addImage('cake', 'assets/cake.png');
->>>>>>> FETCH_HEAD
+
 }
 
 myState.create = function() {
@@ -80,11 +78,8 @@ myState.create = function() {
     this.addChild(this.burgerGroup);
     this.addChild(this.cakeGroup);
     this.addChild(this.catGroup);
-<<<<<<< HEAD
     this.addChild(this.bossCatGroup);
-=======
     this.addChild(this.mexGroup);
->>>>>>> FETCH_HEAD
     this.addChild(this.character);
 
 
@@ -349,42 +344,37 @@ var Cat = function(state, x, y, xVelo, yVelo) {
 }
 Kiwi.extend(Cat, Kiwi.GameObjects.Sprite);
 
-<<<<<<< HEAD
 var BossCat = function(state, x, y, xVelo, yVelo, bossLife) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['boss'], x ,y, false);
-=======
-var Mex = function(state, x, y, xVelo, yVelo) {
-    Kiwi.GameObjects.Sprite.call(this, state, state.textures['mex'], x ,y, false);
->>>>>>> FETCH_HEAD
+
     
     this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
     this.physics.velocity.x = xVelo;
     this.physics.velocity.y = yVelo;
-<<<<<<< HEAD
     this.bossLife = 10;
 
     BossCat.prototype.update = function() {
         Kiwi.GameObjects.Sprite.prototype.update.call(this);
         this.physics.update();
 
-        if (this.x < 100) {
-=======
+var Mex = function(state, x, y, xVelo, yVelo) {
+    Kiwi.GameObjects.Sprite.call(this, state, state.textures['mex'], x ,y, false);
+
+    this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
+    this.physics.velocity.x = xVelo;
+    this.physics.velocity.y = yVelo;
 
     Mex.prototype.update = function() {
         Kiwi.GameObjects.Sprite.prototype.update.call(this);
         this.physics.update();
 
         if (this.x < -90) {
->>>>>>> FETCH_HEAD
             this.destroy();
         }
     }
 }
-<<<<<<< HEAD
 Kiwi.extend(BossCat, Kiwi.GameObjects.Sprite);
-=======
 Kiwi.extend(Mex, Kiwi.GameObjects.Sprite);
->>>>>>> FETCH_HEAD
 
 var Cloud = function(state, x, y, xVelo, yVelo) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['cloud'], x ,y, false);
