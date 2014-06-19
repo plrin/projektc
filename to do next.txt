@@ -17,4 +17,4 @@ to do next
 
 8 bit pics http://superpixeltime.com/
 
-BUG: wenn keine katze im spiel, findet er keinen cnet point
+BUG: wenn keine katze im spiel, findet er keinen center point

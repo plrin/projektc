@@ -9,8 +9,9 @@ loadingState.preload = function(){
     this.addImage('laser', 'assets/laser.png');
     this.addImage('pause', 'assets/pause.png');
     this.addImage('over', 'assets/gameover.png');
+    this.addImage('pause', 'assets/pause.png');
 
-    // these assets will e replaced 
+    // these assets will be replaced 
     this.addImage('burger', 'assets/burger.png');
     this.addImage('cloud', 'assets/cloud.png');
     this.addImage('cake', 'assets/cake.png');
@@ -20,6 +21,6 @@ loadingState.preload = function(){
 loadingState.create = function(){
     Kiwi.State.prototype.create.call(this);
 
-    //Switiching to main game state
-    this.game.states.switchState("gameState");
+    //Switching to main game state
+    this.game.states.switchState("GameState");
 }
