@@ -1,4 +1,20 @@
-to do next
+TO DO NEXT
+
+UPDATE: 19.6.14
+
+- Hintergrund: Boden, Pflanzen, Wolken (eigene Assets, Code vorhanden)
+- Burger und Cake Assets
+
+- Collision zwischen Burger und Doge funktioniert noch nicht
+- Boss einfügen
+
+- Leap Motion integrieren
+- Soundeffects
+
+
+
+
+***********************************************
 
 - hintergrundbild (boden) *
 - hintergrund assets (pflanze, wolken) *
@@ -18,3 +34,6 @@ to do next
 8 bit pics http://superpixeltime.com/
 
 BUG: wenn keine katze im spiel, findet er keinen center point
+
+
+
