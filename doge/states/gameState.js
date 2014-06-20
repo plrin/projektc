@@ -93,6 +93,12 @@ gameState.update = function(){
     }
     // condition for pausing the game
     if (this.pauseKey.isDown) {
+        this.timer = this.game.time.clock.pause('spawnCat');
+        this.timer = this.game.time.clock.pause('spawnMex');
+        this.timer = this.game.time.clock.pause('spawnCloud');
+        this.timer = this.game.time.clock.pause('bombShoot');
+        this.timer = this.game.time.clock.pause('catShoot');
+
         this.game.states.switchState("PauseState");
     }
 
@@ -171,18 +177,18 @@ gameState.checkCollisions = function() {
         }  
     }
 
-    // collision between cake and doge
-    // for (var i = 0; i < burgers.length; i++) {
-    //     if (burgers[i].physics.overlaps(this.character)) {
-    //         this.timer = this.game.time.clock.stop('spawnCat');
-    //         this.timer = this.game.time.clock.stop('spawnMex');
-    //         this.timer = this.game.time.clock.stop('spawnCloud');
-    //         this.timer = this.game.time.clock.stop('bombShoot');
-    //         this.timer = this.game.time.clock.stop('catShoot');
+    // collision between burgers and doge
+    for (var i = 0; i < burgers.length; i++) {
+        if (burgers[i].physics.overlaps(this.character)) {
+            this.timer = this.game.time.clock.stop('spawnCat');
+            this.timer = this.game.time.clock.stop('spawnMex');
+            this.timer = this.game.time.clock.stop('spawnCloud');
+            this.timer = this.game.time.clock.stop('bombShoot');
+            this.timer = this.game.time.clock.stop('catShoot');
 
-    //         this.game.states.switchState("GameOverState");
-    //     }  
-    // }
+            this.game.states.switchState("GameOverState");
+        }  
+    }
 
     // collision between mex cat and doge
     for (var i = 0; i < mexCats.length; i++) {

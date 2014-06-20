@@ -9,7 +9,7 @@ pauseState.create = function() {
 
     this.pauseGame = new Kiwi.GameObjects.StaticImage(this, this.textures['pause'], 0, 0);
     
-    this.addChild(this.pause);
+    this.addChild(this.pauseGame);
 
     // key settings
     this.pauseKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.ENTER);
@@ -25,11 +25,11 @@ pauseState.update = function(){
 
 
     if (this.pauseKey.isDown) {
-        this.timer = this.game.time.clock.pause('spawnCat');
-        this.timer = this.game.time.clock.pause('spawnMex');
-        this.timer = this.game.time.clock.pause('spawnCloud');
-        this.timer = this.game.time.clock.pause('bombShoot');
-        this.timer = this.game.time.clock.pause('catShoot');
+        this.timer = this.game.time.clock.resume('spawnCat');
+        this.timer = this.game.time.clock.resume('spawnMex');
+        this.timer = this.game.time.clock.resume('spawnCloud');
+        this.timer = this.game.time.clock.resume('bombShoot');
+        this.timer = this.game.time.clock.resume('catShoot');
 
     	this.game.states.switchState("GameState");
     }
