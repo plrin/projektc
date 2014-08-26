@@ -1,5 +1,18 @@
 TO DO NEXT
 
+UPDATE: 26.8.14
+
+- Hintergrund: Boden, Pflanzen, Wolken (eigene Assets, Code vorhanden)
+- Burger und Cake Assets
+
+- Schrift neu schreiben lassen
+
+- Boss einfügen
+
+- Leap Motion integrieren
+- Soundeffects
+
+************************************************
 UPDATE: 19.6.14
 
 - Hintergrund: Boden, Pflanzen, Wolken (eigene Assets, Code vorhanden)

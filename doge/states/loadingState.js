@@ -11,6 +11,10 @@ loadingState.preload = function(){
     this.addImage('over', 'assets/gameover.png');
     this.addImage('pause', 'assets/pause.png');
 
+    //sounds
+    this.addAudio('shootSound', 'assets/lasersound.wav');
+    this.addAudio('boom', 'assets/boom.mp3');
+
     // these assets will be replaced 
     this.addImage('burger', 'assets/burger.png');
     this.addImage('cloud', 'assets/cloud.png');

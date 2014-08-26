@@ -21,6 +21,7 @@ gameState.create = function() {
     // key settings
     this.shootKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.Q);
     this.pauseKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.ENTER);
+    this.soundKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.W);
 
     
     // timer for spawning nyan cat
@@ -39,6 +40,10 @@ gameState.create = function() {
     this.timer = this.game.time.clock.createTimer('spawnCloud', 15, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCloud, this);
     
+
+    // Audio Objects
+    this.laserSound = new Kiwi.Sound.Audio(this.game, 'shootSound', 10, false);
+    this.boomSound = new Kiwi.Sound.Audio(this.game, 'boom', 1, false);
 
     // Groups
     this.laserGroup = new Kiwi.Group(this);
@@ -87,6 +92,7 @@ gameState.update = function(){
 
     this.checkCollisions();
 */
+
     // condition for shooting
     if ((this.shootKey.isDown) && (allowShoot == true)) {
         this.shoot();
@@ -102,16 +108,21 @@ gameState.update = function(){
         this.game.states.switchState("PauseState");
     }
 
-    // test for without leap motion
+    // test without leap motion
     this.mouseControl();
     this.checkCollisions();
-    
-
-
 }
+
+
 /***************************
   functions starting here
 ***************************/
+gameState.sound = function() {
+    if(this.soundKey.isDown) {
+        this.laserSound.play();
+    }
+}
+
 gameState.leapControl = function() {
     this.control.update();
     this.character.x = (this.control.hands[0].posX * 4) + 400;
@@ -135,6 +146,8 @@ gameState.shoot = function() {
         this.laserGroup.addChild(new Laser(this, this.character.x + 33, this.character.y + 37, 100, 0));
         this.timer = this.game.time.clock.createTimer('shoot', 0.5, 1, true);
         this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_STOP, this.enableShoot, this);
+        this.laserSound.play();
+        this.boomSound.play();
     }
 }
 
@@ -177,19 +190,6 @@ gameState.checkCollisions = function() {
         }  
     }
 
-    // collision between burgers and doge
-    // for (var i = 0; i < burgers.length; i++) {
-    //     if (burgers[i].physics.overlaps(this.character)) {
-    //         this.timer = this.game.time.clock.stop('spawnCat');
-    //         this.timer = this.game.time.clock.stop('spawnMex');
-    //         this.timer = this.game.time.clock.stop('spawnCloud');
-    //         this.timer = this.game.time.clock.stop('bombShoot');
-    //         this.timer = this.game.time.clock.stop('catShoot');
-
-    //         this.game.states.switchState("GameOverState");
-    //     }  
-    // }
-
     // collision between mex cat and doge
     for (var i = 0; i < mexCats.length; i++) {
         if (mexCats[i].physics.overlaps(this.character)) {
@@ -206,6 +206,19 @@ gameState.checkCollisions = function() {
     // collision between cake and doge
     for (var i = 0; i < cakes.length; i++) {
         if (cakes[i].physics.overlaps(this.character)) {
+            this.timer = this.game.time.clock.stop('spawnCat');
+            this.timer = this.game.time.clock.stop('spawnMex');
+            this.timer = this.game.time.clock.stop('spawnCloud');
+            this.timer = this.game.time.clock.stop('bombShoot');
+            this.timer = this.game.time.clock.stop('catShoot');
+
+            this.game.states.switchState("GameOverState");
+        }  
+    }
+
+    // collision between burgers and doge
+    for (var i = 0; i < burgers.length; i++) {
+        if (burgers[i].physics.overlaps(this.character)) {
             this.timer = this.game.time.clock.stop('spawnCat');
             this.timer = this.game.time.clock.stop('spawnMex');
             this.timer = this.game.time.clock.stop('spawnCloud');
@@ -295,6 +308,7 @@ gameState.bombShoot = function() {
 var Burger = function(state, x, y, angle) {
     Kiwi.GameObjects.Sprite.call(this, state, state.textures['burger'], x, y, false);
 
+    this.physics = this.components.add(new Kiwi.Components.ArcadePhysics(this, this.box));
     this.angle = angle + (Math.PI / 2);
     this.speed = 6;
     this.rotation = -(angle);
