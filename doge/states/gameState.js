@@ -178,17 +178,17 @@ gameState.checkCollisions = function() {
     }
 
     // collision between burgers and doge
-    for (var i = 0; i < burgers.length; i++) {
-        if (burgers[i].physics.overlaps(this.character)) {
-            this.timer = this.game.time.clock.stop('spawnCat');
-            this.timer = this.game.time.clock.stop('spawnMex');
-            this.timer = this.game.time.clock.stop('spawnCloud');
-            this.timer = this.game.time.clock.stop('bombShoot');
-            this.timer = this.game.time.clock.stop('catShoot');
+    // for (var i = 0; i < burgers.length; i++) {
+    //     if (burgers[i].physics.overlaps(this.character)) {
+    //         this.timer = this.game.time.clock.stop('spawnCat');
+    //         this.timer = this.game.time.clock.stop('spawnMex');
+    //         this.timer = this.game.time.clock.stop('spawnCloud');
+    //         this.timer = this.game.time.clock.stop('bombShoot');
+    //         this.timer = this.game.time.clock.stop('catShoot');
 
-            this.game.states.switchState("GameOverState");
-        }  
-    }
+    //         this.game.states.switchState("GameOverState");
+    //     }  
+    // }
 
     // collision between mex cat and doge
     for (var i = 0; i < mexCats.length; i++) {
