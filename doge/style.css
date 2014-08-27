@@ -1,0 +1,39 @@
+html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	min-height: 100%;
+	width: 100%;
+	min-width: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	min-height: 100%;
+	font-size: 100%;
+	background-color: yellow;
+}
+
+#title {
+	text-align: center;
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#game {
+	width: 800px;
+	margin-right: auto;
+	margin-left: auto;
+
+}
+
+#info {
+	text-align: left;
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+
+}

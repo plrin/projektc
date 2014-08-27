@@ -2,6 +2,8 @@ var gameState = new Kiwi.State('GameState');
 
 //global variables
 allowShoot = true;
+gamespeed = 1;
+multiplier = 0.7;
 
 
 gameState.create = function() {
@@ -39,6 +41,9 @@ gameState.create = function() {
     // timer for spawning clouds
     this.timer = this.game.time.clock.createTimer('spawnCloud', 15, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCloud, this);
+    //timer for adding speed
+    // this.timer = this.game.time.clock.createTimer('addSpeed', 5, -1, true);
+    // this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT, this.addSpeed, this);
     
 
     // Audio Objects
@@ -68,11 +73,13 @@ gameState.create = function() {
 
     //Creating HUD Widgets
 
-    this.scoreBoard = new Kiwi.HUD.Widget.TextField(this.game, "Your score: 0", 10, 30);
+    this.scoreBoard = new Kiwi.HUD.Widget.TextField(this.game, "Your score:", 10, 30);
+    this.gamespeed = new Kiwi.HUD.Widget.TextField(this.game, "Spawninterval:", 10, 60);
     this.scoreBoard.style.fontFamily = "helvetica";
 
     //Adding HUD elements to defaultHUD
     this.game.huds.defaultHUD.addWidget(this.scoreBoard);
+    this.game.huds.defaultHUD.addWidget(this.gamespeed);
 }
 
 // function of the game engine
@@ -81,7 +88,7 @@ gameState.update = function(){
     // process and update game loop
     Kiwi.State.prototype.update.call(this);
 
-    // Leap Control
+    // Leap Control and mouse control
   /*  if (this.control.controllerConnected) {
         this.leapControl();
     }
@@ -97,8 +104,11 @@ gameState.update = function(){
     if ((this.shootKey.isDown) && (allowShoot == true)) {
         this.shoot();
     }
+
     // condition for pausing the game
+    //not supported correctly in this version of engine
     if (this.pauseKey.isDown) {
+        gamespeed = 1;
         this.timer = this.game.time.clock.pause('spawnCat');
         this.timer = this.game.time.clock.pause('spawnMex');
         this.timer = this.game.time.clock.pause('spawnCloud');
@@ -117,6 +127,11 @@ gameState.update = function(){
 /***************************
   functions starting here
 ***************************/
+
+gameState.addSpeed = function() {
+    gamespeed = gamespeed * multiplier;
+}
+
 gameState.sound = function() {
     if(this.soundKey.isDown) {
         this.laserSound.play();
@@ -180,52 +195,28 @@ gameState.checkCollisions = function() {
     // collision between nyan cat and doge
     for (var i = 0; i < cats.length; i++) {
         if (cats[i].physics.overlaps(this.character)) {
-			this.timer = this.game.time.clock.stop('spawnCat');
-			this.timer = this.game.time.clock.stop('spawnMex');
-        	this.timer = this.game.time.clock.stop('spawnCloud');
-        	this.timer = this.game.time.clock.stop('bombShoot');
-        	this.timer = this.game.time.clock.stop('catShoot');
-
-            this.game.states.switchState("GameOverState");
+			this.dead();
         }  
     }
 
     // collision between mex cat and doge
     for (var i = 0; i < mexCats.length; i++) {
         if (mexCats[i].physics.overlaps(this.character)) {
-            this.timer = this.game.time.clock.stop('spawnCat');
-            this.timer = this.game.time.clock.stop('spawnMex');
-            this.timer = this.game.time.clock.stop('spawnCloud');
-            this.timer = this.game.time.clock.stop('bombShoot');
-            this.timer = this.game.time.clock.stop('catShoot');
-
-            this.game.states.switchState("GameOverState");
+            this.dead();
         }  
     }
 
     // collision between cake and doge
     for (var i = 0; i < cakes.length; i++) {
         if (cakes[i].physics.overlaps(this.character)) {
-            this.timer = this.game.time.clock.stop('spawnCat');
-            this.timer = this.game.time.clock.stop('spawnMex');
-            this.timer = this.game.time.clock.stop('spawnCloud');
-            this.timer = this.game.time.clock.stop('bombShoot');
-            this.timer = this.game.time.clock.stop('catShoot');
-
-            this.game.states.switchState("GameOverState");
+            this.dead();
         }  
     }
 
     // collision between burgers and doge
     for (var i = 0; i < burgers.length; i++) {
         if (burgers[i].physics.overlaps(this.character)) {
-            this.timer = this.game.time.clock.stop('spawnCat');
-            this.timer = this.game.time.clock.stop('spawnMex');
-            this.timer = this.game.time.clock.stop('spawnCloud');
-            this.timer = this.game.time.clock.stop('bombShoot');
-            this.timer = this.game.time.clock.stop('catShoot');
-
-            this.game.states.switchState("GameOverState");
+            this.dead();
         }  
     }
 
@@ -277,6 +268,16 @@ gameState.checkCollisions = function() {
 
 
 }   // collision function ends here
+
+gameState.dead = function() {
+    this.timer = this.game.time.clock.stop('spawnCat');
+    this.timer = this.game.time.clock.stop('spawnMex');
+    this.timer = this.game.time.clock.stop('spawnCloud');
+    this.timer = this.game.time.clock.stop('bombShoot');
+    this.timer = this.game.time.clock.stop('catShoot');
+
+    this.game.states.switchState("GameOverState");
+}
 
 gameState.catShoot = function() {
     var cats = this.catGroup.members;

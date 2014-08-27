@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>DOGE SHOOTER</title>
-		<script src="http://js.leapmotion.com/leap-0.4.1.min.js"></script>
-		<script src="plugins/LEAPController-0.1.4.js"></script>
-		<script src="plugins/kiwi.js"></script>
-		<script src="states/loadingState.js"></script>
-		<script src="states/gameOverState.js"></script>
-		<script src="states/pauseState.js"></script>
-		<script src="states/gameState.js"></script>
-		<script src="states/switchState.js"></script>
+		<title>Doge Shooter</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
-		<h1>DOGE SHOOTER</h1>
+		<div id="title">
+			<h1>Doge Shooter</h1>
+		</div>
+		
+		<div id="game">
+			<iframe height="600px" width="800px" src="game.html" seamless="seamless" scrolling="no" frameborder="no"></iframe>
+		</div>
 
+		<div id="info">
+			Controls </br >
+			Move: Mouse or Leap Motion </br >
+			Shoot: Q </br >
+			Pause: ENTER </br >
+		</div>
 	</body>
 </html>
