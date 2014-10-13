@@ -111,16 +111,16 @@ gameState.update = function(){
 
     // condition for pausing the game
     //not supported correctly in this version of engine
-    if (this.pauseKey.isDown) {
-        gamespeed = 1;
-        this.timer = this.game.time.clock.pause('spawnCat');
-        this.timer = this.game.time.clock.pause('spawnMex');
-        this.timer = this.game.time.clock.pause('spawnCloud');
-        this.timer = this.game.time.clock.pause('bombShoot');
-        this.timer = this.game.time.clock.pause('catShoot');
+    // if (this.pauseKey.isDown) {
+    //     gamespeed = 1;
+    //     this.timer = this.game.time.clock.pause('spawnCat');
+    //     this.timer = this.game.time.clock.pause('spawnMex');
+    //     this.timer = this.game.time.clock.pause('spawnCloud');
+    //     this.timer = this.game.time.clock.pause('bombShoot');
+    //     this.timer = this.game.time.clock.pause('catShoot');
 
-        this.game.states.switchState("PauseState");
-    }
+    //     this.game.states.switchState("PauseState");
+    // }
 
     // test without leap motion
     this.mouseControl();
