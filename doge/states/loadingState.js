@@ -12,6 +12,7 @@ loadingState.preload = function(){
     this.addImage('over', 'assets/gameover.png');
     this.addImage('pause', 'assets/pause.png');
     this.addImage('boss', 'assets/BossCat.png');
+    this.addImage('bossLaser', 'assets/laser2.png');
 
     //sounds
     this.addAudio('shootSound', 'assets/lasersound.wav');
