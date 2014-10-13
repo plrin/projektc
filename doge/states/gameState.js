@@ -1,4 +1,5 @@
 var gameState = new Kiwi.State('GameState');
+//var myGame = new Kiwi.Game('', 'myGame', myState, {plugins:’LeapMotion’]});
 
 //global variables
 allowShoot = true;
@@ -18,7 +19,7 @@ gameState.create = function() {
     this.character = new Doge(this, 200,200);
     this.mouse = this.game.input.mouse;
     // leap controller keep track of all movments
-    //this.control = Kiwi.Plugins.LEAPController.createController();
+   // this.control = Kiwi.Plugins.LeapController.createController();
 
     // key settings
     this.shootKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.Q);
@@ -93,16 +94,19 @@ gameState.update = function(){
     Kiwi.State.prototype.update.call(this);
 
     // Leap Control and mouse control
-  /*  if (this.control.controllerConnected) {
-        this.leapControl();
-    }
-    else {
-        //mouse control
-        this.mouseControl();
-    }
+    // if (this.control.controllerConnected) {
+    //     this.leapControl();
+    // }
+    // else {
+    //     //mouse control
+    //     this.mouseControl();
+    // }
+
+
+    // test without leap motion
+    // this.mouseControl();
 
     this.checkCollisions();
-*/
 
     // condition for shooting
     if ((this.shootKey.isDown) && (allowShoot == true)) {
@@ -122,9 +126,7 @@ gameState.update = function(){
     //     this.game.states.switchState("PauseState");
     // }
 
-    // test without leap motion
-    this.mouseControl();
-    this.checkCollisions();
+   
 }
 
 
