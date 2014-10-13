@@ -1,3 +1,4 @@
+
 var myGame = new Kiwi.Game();
 myGame.states.addState(loadingState);
 myGame.states.addState(gameState);
