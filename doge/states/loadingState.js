@@ -14,10 +14,6 @@ loadingState.preload = function(){
     this.addImage('boss', 'assets/BossCat.png');
     this.addImage('bossLaser', 'assets/laser2.png');
 
-    //sounds
-    this.addAudio('shootSound', 'assets/lasersound.wav');
-    this.addAudio('boom', 'assets/boom.mp3');
-
     // these assets will be replaced 
     this.addImage('burger', 'assets/burger.png');
     this.addImage('cloud', 'assets/cloud.png');

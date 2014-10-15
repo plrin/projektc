@@ -2,8 +2,7 @@ var gameState = new Kiwi.State('GameState');
 
 //global variables
 allowShoot = true;
-gamespeed = 1;
-multiplier = 0.7;
+
 
 
 gameState.create = function() {
@@ -23,7 +22,6 @@ gameState.create = function() {
     // key settings
     this.shootKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.Q);
     this.pauseKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.ENTER);
-    this.soundKey = this.game.input.keyboard.addKey(Kiwi.Input.Keycodes.W);
 
     
     // timer for spawning nyan cat
@@ -41,16 +39,9 @@ gameState.create = function() {
     // timer for spawning clouds
     this.timer = this.game.time.clock.createTimer('spawnCloud', 15, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCloud, this);
-    //timer for adding speed
-    this.timer = this.game.time.clock.createTimer('addSpeed', 5, -1, true);
-    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT, this.addSpeed, this);
     // timer for spawning Boss
     this.timer = this.game.time.clock.createTimer('spawnBoss', 10, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnBossCat, this);
-
-    // Audio Objects
-    this.laserSound = new Kiwi.Sound.Audio(this.game, 'shootSound', 10, false);
-    this.boomSound = new Kiwi.Sound.Audio(this.game, 'boom', 1, false);
 
     // Groups
     this.laserGroup = new Kiwi.Group(this);
@@ -80,12 +71,10 @@ gameState.create = function() {
     //Creating HUD Widgets
 
     this.scoreBoard = new Kiwi.HUD.Widget.TextField(this.game, "Your score:", 10, 30);
-    this.gamespeed = new Kiwi.HUD.Widget.TextField(this.game, "Spawninterval:", 10, 60);
     this.scoreBoard.style.fontFamily = "helvetica";
 
     //Adding HUD elements to defaultHUD
     this.game.huds.defaultHUD.addWidget(this.scoreBoard);
-    this.game.huds.defaultHUD.addWidget(this.gamespeed);
 }
 
 // function of the game engine
@@ -113,6 +102,8 @@ gameState.update = function(){
         this.shoot();
     }
 
+    this.scoreBoard.text = "Score: " + this.score;
+    
     // condition for pausing the game
     //not supported correctly in this version of engine
     // if (this.pauseKey.isDown) {
@@ -133,16 +124,6 @@ gameState.update = function(){
 /***************************
   functions starting here
 ***************************/
-
-gameState.addSpeed = function() {
-    gamespeed = gamespeed * multiplier;
-}
-
-gameState.sound = function() {
-    if(this.soundKey.isDown) {
-        this.laserSound.play();
-    }
-}
 
 gameState.leapControl = function() {
     this.control.update();
@@ -167,8 +148,6 @@ gameState.shoot = function() {
         this.laserGroup.addChild(new Laser(this, this.character.x + 33, this.character.y + 37, 100, 0));
         this.timer = this.game.time.clock.createTimer('shoot', 0.5, 1, true);
         this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_STOP, this.enableShoot, this);
-        this.laserSound.play();
-        this.boomSound.play();
     }
 }
 
@@ -245,7 +224,6 @@ gameState.checkCollisions = function() {
             if (boss[i].physics.overlaps(lasers[j])) {
                 boss[i].bossLife -= 1;
                 lasers[j].destroy();
-                this.scoreBoard.text = "Your score: " + this.score;
                 break;
             }
         }  
@@ -299,7 +277,6 @@ gameState.checkCollisions = function() {
                 cats[i].destroy();
                 lasers[j].destroy();
                 this.score += 10;
-                this.scoreBoard.text = "Your score: " + this.score;
                 break;
             }
         }  
@@ -312,7 +289,6 @@ gameState.checkCollisions = function() {
                 mexCats[i].destroy();
                 lasers[j].destroy();
                 this.score += 10;
-                this.scoreBoard.text = "Your score: " + this.score;
                 break;
             }
         }  
