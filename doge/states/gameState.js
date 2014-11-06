@@ -40,8 +40,16 @@ gameState.create = function() {
     this.timer = this.game.time.clock.createTimer('spawnCloud', 15, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnCloud, this);
     // timer for spawning Boss
-    this.timer = this.game.time.clock.createTimer('spawnBoss', 10, -1, true);
+    this.timer = this.game.time.clock.createTimer('spawnBoss', 30, -1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.spawnBossCat, this);
+    //timer for stopping boss movement and pause
+    this.timer = this.game.time.clock.createTimer('stopBoss', 3, -1, true);
+    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.stopBossCat, this);
+    this.timer = this.game.time.clock.pause('stopBoss');
+    //timer for the boss shooting
+    this.timer = this.game.time.clock.createTimer('bossShoot', 1, -1, true);
+    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.bossShoot, this);
+    this.timer = this.game.time.clock.pause('bossShoot');
 
     // Groups
     this.laserGroup = new Kiwi.Group(this);
@@ -163,10 +171,8 @@ gameState.spawnMex = function() {
 gameState.spawnBossCat = function() {
     this.bossCatGroup.addChild(new BossCat(this, (myGame.stage.width * 0.5) - 100, myGame.stage.height, 0, -10));
     //create Timer to stop Boss from moving
-    this.timer = this.game.time.clock.createTimer('stopBoss', 3, -1, true);
-    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.stopBossCat, this);
-    this.timer = this.game.time.clock.createTimer('bossShoot', 1, -1, true);
-    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_COUNT,this.bossShoot, this);
+    this.timer = this.game.time.clock.resume('stopBoss');
+    this.timer = this.game.time.clock.resume('bossShoot');
 }
 
 gameState.stopBossCat = function(){
@@ -174,6 +180,7 @@ gameState.stopBossCat = function(){
         for (var i = 0; i < boss.length; i++){
             boss[i].physics.velocity.y = 0;
     }
+    this.timer = this.game.time.clock.pause('stopBoss');
 }
 
 gameState.spawnCloud = function() {
@@ -190,7 +197,7 @@ gameState.checkCollisions = function() {
     var cats = this.catGroup.members;
     var lasers = this.laserGroup.members;
     var burgers = this.burgerGroup.members;
-    var bossLasers = this.bossLaserGroup;
+    var bossLasers = this.bossLaserGroup.members;
     var mexCats = this.mexGroup.members;
     var cakes = this.cakeGroup.members;
     var boss = this.bossCatGroup.members;
@@ -471,6 +478,7 @@ var BossCat = function(state, x, y, xVelo, yVelo, bossLife) {
         if (this.bossLife == 0){
             this.destroy();
             this.score += 50;
+            this.timer = this.game.time.clock.pause('bossShoot');
         }
     }
 }
