@@ -8,7 +8,7 @@ allowSpawnMex = true;
 allowCatShoot = true;
 allowBombShoot = true;
 bossExist = false;
-gameSpeed = 3;
+gameSpeed = 0.8;
 
 
 gameState.create = function() {
