@@ -200,11 +200,13 @@ gameState.spawnCloud = function() {
     this.cloudGroup.addChild(new Cloud(this, myGame.stage.width, r, -5 * gameSpeed, 0));
 }
 
+/******************************************
+*** Condition functions for timer events ***
+******************************************/
 
 gameState.enableShoot = function() {
     allowShoot = true;
 }
-
 gameState.enableBossShoot = function() {
     allowBossShoot = true;
 }
@@ -221,6 +223,7 @@ gameState.enableSpawnMex = function() {
     allowSpawnMex = true;
 }
 
+//Checking all Collisions
 gameState.checkCollisions = function() {
     var cats = this.catGroup.members;
     var lasers = this.laserGroup.members;
@@ -330,7 +333,8 @@ gameState.checkCollisions = function() {
     }
 
 
-}   // collision function ends here
+}
+// collision function ends here
 
 gameState.dead = function() {
     this.timer = this.game.time.clock.stop('spawnCat');
@@ -341,7 +345,7 @@ gameState.dead = function() {
 
     this.game.states.switchState("GameOverState");
 }
-
+//Nyan Cat attack
 gameState.catShoot = function() {
     var cats = this.catGroup.members;
     var numberCats = cats.length;
@@ -357,8 +361,18 @@ gameState.catShoot = function() {
     this.timer = this.game.time.clock.createTimer('catShoot', (3 - (0.3 * (2 * gameSpeed))), 1, true);
     this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_STOP,this.enableCatShoot, this);
 }
-
-//Boss attack 1
+//Mex Cat attack
+gameState.bombShoot = function() {
+    var mexs = this.mexGroup.members;
+    var numberMexs = mexs.length;
+    var i = Math.floor(Math.random() * numberMexs) - 1;
+    
+    this.cakeGroup.addChild(new Cake(this, mexs[i+1].x, mexs[i+1].y, -10 * gameSpeed, 10 * gameSpeed));
+    // timer for mexican cat bombing 
+    this.timer = this.game.time.clock.createTimer('bombShoot', (5 - (0.5 * (2 * gameSpeed))), 1, true);
+    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_STOP,this.enableBombShoot, this);
+}
+//Boss attack
 gameState.bossShoot = function() {
     var boss = this.bossCatGroup.members;
     var i = boss.length;
@@ -378,18 +392,6 @@ gameState.bossShoot = function() {
         allowBossShoot = false;
     }
 }
-
-gameState.bombShoot = function() {
-    var mexs = this.mexGroup.members;
-    var numberMexs = mexs.length;
-    var i = Math.floor(Math.random() * numberMexs) - 1;
-    
-    this.cakeGroup.addChild(new Cake(this, mexs[i+1].x, mexs[i+1].y, -10 * gameSpeed, 10 * gameSpeed));
-    // timer for mexican cat bombing 
-    this.timer = this.game.time.clock.createTimer('bombShoot', (5 - (0.5 * (2 * gameSpeed))), 1, true);
-    this.timerEvent = this.timer.createTimerEvent(Kiwi.Time.TimerEvent.TIMER_STOP,this.enableBombShoot, this);
-}
-
 
 /**********************
      here are the game objects
