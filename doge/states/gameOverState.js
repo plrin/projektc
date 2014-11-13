@@ -32,10 +32,13 @@ gameOverState.update = function(){
         this.timer = this.game.time.clock.start('bombShoot');
         this.timer = this.game.time.clock.start('catShoot');
 
+        allowShoot = true;
         allowSpawnCat = true;
         allowSpawnMex = true;
         allowCatShoot = true;
         allowBombShoot = true;
+
+        gameSpeed = 0.8;
 
     	this.game.states.switchState("GameState");
     }
